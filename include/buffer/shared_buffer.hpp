@@ -44,11 +44,11 @@
 #include <cstddef> // std::byte
 #include <vector>
 #include <memory> // std::shared_ptr
+#include <compare> // spaceship operator
+#include <span>
 
 #include <utility> // std::move, std::swap
 #include <cstring> // std::memcpy
-
-#include "utility/cast_ptr_to.hpp"
 
 namespace chops {
 

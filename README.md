@@ -12,7 +12,7 @@
 
 The `shared_buffer` classes are reference counted `std::byte` buffer classes useful for asynchronous networking. In particular, the Asio asynchronous networking library requires a buffer to be kept alive and valid until the outstanding IO operation (e.g. a network write) is completed. A straightforward and idiomatic way to achieve this is by using reference counted buffers.
 
-There are two classes - `const_shared_buffer` for outgoing buffers (which should not be modified), and `mutable_shared_buffer` for incoming buffers (mutable and expandable as data arrives).
+There are two classes - `const_shared_buffer` for outgoing buffers (which should not be modified), and `mutable_shared_buffer` for incoming buffers (mutable and expandable as data arrives). There are efficient (move) operations for creating a `const_shared_buffer` from a `mutable_shared_buffer`, which allows the use case of creating a message and serializing its contents, then sending it out over the network.
 
 While internally all data is kept in `std::byte` buffers, convenience methods are provided for converting between traditional buffer types (such as `char *` or `unsigned char*` or similar).
 
@@ -36,7 +36,9 @@ Continuous integration workflows build and unit test on g++ (through Ubuntu), MS
 
 The unit test code uses [Catch2](https://github.com/catchorg/Catch2). If the `SHARED_BUFFER_BUILD_TESTS` flag is provided to Cmake (see commands below) the Cmake configure / generate will download the Catch2 library as appropriate using the [CPM.cmake](https://github.com/cpm-cmake/CPM.cmake) dependency manager. If Catch2 (v3 or greater) is already installed using a different package manager (such as Conan or vcpkg), the `CPM_USE_LOCAL_PACKAGES` variable can be set which results in `find_package` being attempted. Note that v3 (or later) of Catch2 is required.
 
-Specific version (or branch) specs for the Catch2 dependency is in `test/CMakeLists.txt`.
+The unit test uses utilities from Connective C++'s [utility-rack](https://github.com/connectivecpp/utility-rack).
+
+Specific version (or branch) specs for the dependenies are in `test/CMakeLists.txt`.
 
 ## Build and Run Unit Tests
 
