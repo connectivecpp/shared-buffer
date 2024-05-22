@@ -4,6 +4,17 @@
  *
  * ### Additional Details
  *
+ * There are two concrete classes:
+- `mutable_shared_buffer`, a reference counted modifiable buffer class with convenience methods for appending data.
+- `const_shared_buffer`, a reference counted non-modifiable buffer class. Once the object is constructed, it cannot be modified. This class is used by the Chops Net IP library for asynchronous send buffer processing.
+
+Internally all data is stored in a `std::vector` of `std::byte`. There are ordering methods so that shared buffer objects can be stored in sequential or associative containers.
+
+Efficient moving of data (versus copying) is enabled in multiple ways, including:
+- Allowing a `const_shared_buffer` to be move constructed from a `mutable_shared_buffer`.
+- Allowing a `std::vector` of `std::byte` to be moved into either shared buffer type.
+
+The implementation is adapted from Chris Kohlhoff's reference counted buffer examples (see [References](references.md)).
  * The @c mutable_shared_buffer and @c const_shared_buffer classes provide byte
  * buffer classes with internal reference counting. These classes are used within 
  * the Chops Net IP library to manage data buffer lifetimes. The @c mutable_shared_buffer 
@@ -18,7 +29,7 @@
  *
  * This code is based on and modified from Chris Kohlhoff's Asio example code. It has
  * been significantly modified by adding a @c mutable_shared_buffer class as well as 
- * adding convenience methods to the @c shared_const_buffer class.
+ * adding convenience methods to the @c const_shared_buffer class.
  *
  * It is likely that this shared buffer design and code will change as the C++ 
  * Networking TS buffer features are expanded, changed, or better understood. Currently
@@ -31,7 +42,7 @@
  *
  * @authors Cliff Green, Chris Kohlhoff
  *
- * Copyright (c) 2017-2024 by Cliff Green
+ * @copyright (c) 2017-2024 by Cliff Green
  *
  * Distributed under the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
