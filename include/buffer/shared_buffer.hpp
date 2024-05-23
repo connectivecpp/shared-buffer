@@ -2,34 +2,56 @@
  *
  * ## Overview
  *
- * ### Additional Details
+ * The @c shared_buffer classes provide byte buffers with internal reference counting. 
+ * These classes can be used within asynchronous IO / networking applications where the 
+ * lifetime of the buffer must be kept alive until a requested IO operation completes.
  *
- * There are two concrete classes:
-- `mutable_shared_buffer`, a reference counted modifiable buffer class with convenience methods for appending data.
-- `const_shared_buffer`, a reference counted non-modifiable buffer class. Once the object is constructed, it cannot be modified. This class is used by the Chops Net IP library for asynchronous send buffer processing.
-
-Internally all data is stored in a `std::vector` of `std::byte`. There are ordering methods so that shared buffer objects can be stored in sequential or associative containers.
-
-Efficient moving of data (versus copying) is enabled in multiple ways, including:
-- Allowing a `const_shared_buffer` to be move constructed from a `mutable_shared_buffer`.
-- Allowing a `std::vector` of `std::byte` to be moved into either shared buffer type.
-
-The implementation is adapted from Chris Kohlhoff's reference counted buffer examples (see [References](references.md)).
- * The @c mutable_shared_buffer and @c const_shared_buffer classes provide byte
- * buffer classes with internal reference counting. These classes are used within 
- * the Chops Net IP library to manage data buffer lifetimes. The @c mutable_shared_buffer 
- * class can be used to construct a data buffer, and then a @c const_shared_buffer can 
- * be move constructed from the @c mutable_shared_buffer for use with the asynchronous 
- * library functions (whether Chops Net IP or C++ Networking TS or Asio). A 
- * @c mutable_shared_buffer can also be constructed by moving a @c std::vector of 
- * @c std:;bytes into it.
+ * For example, a network write is started asynchronously, which means a write request
+ * is started, and the write completion will happen at a later time. The byte buffer
+ * must be kept alive until the completion notification. Meanwhile multiple other
+ * write requests can happen simultaneously (even on the same thread). For reads, a
+ * read request can be started, and the byte buffer used for incoming data will be
+ * kept alive until a read request completes - i.e. data arrives.
+ *
+ * In networking applications, this allows multiple sockets to be performing reads 
+ * and writes under one thread (or multiple threads, such as in a thread pool).
+ * In particular, it eliminates the (sometimes inefficient) design of "one thread
+ * per socket".
+ *
+ * The Connective C++ Chops Net IP library is an asynchronous networking library (using
+ * Asio underneath) and it uses @c shared_buffer classes for buffer lifetime management. 
+ *
+ * There are two concrete classes, @c mutable_shared_buffer and @c const_shared_buffer.
+ * @c mutable_shared_buffer is a reference counted modifiable buffer class with 
+ * convenience methods for appending data. @c const_shared_buffer is a reference counted 
+ * non-modifiable buffer class. Once the object is constructed, it cannot be modified. 
+ *
+ * A @c const_shared_buffer can be efficiently constructed (no buffer copies) from a 
+ * @c mutable shared_buffer. This allows the use case of serializing data into a 
+ * @c mutable_shared_buffer then constructing a @c const_shared_buffer for writing to
+ * the network.
  *
  * Besides the data buffer lifetime management, these utility classes eliminate data 
- * buffer copies.
+ * copies and (obviously) do not have to be used only in networking use cases.
  *
- * This code is based on and modified from Chris Kohlhoff's Asio example code. It has
- * been significantly modified by adding a @c mutable_shared_buffer class as well as 
- * adding convenience methods to the @c const_shared_buffer class.
+ * ### Additional Details
+ *
+ * Internally all data is stored in a @c std::vector of @c std::byte. There are 
+ * convenience templated constructors so that the @c shared_buffer objects can
+ * be constructed from traditional byte buffers, such as @c char @c *.
+ *
+ * There are ordering methods so that shared buffer objects can be stored in 
+ * sequential or associative containers.
+ *
+ * Efficient moving of data (versus copying) is enabled in multiple ways, including
+ * allowing a @c const_shared_buffer to be move constructed from a 
+ * @c mutable_shared_buffer, and allowing a @c std::vector of @c std::byte to be moved 
+ * into either @c shared_buffer type.
+ *
+ * The implementation is adapted from Chris Kohlhoff's reference counted buffer 
+ * examples in the Asio library. It has been significantly modified by adding a 
+ * @c mutable_shared_buffer class as well as adding convenience methods to the 
+ * @c const_shared_buffer class.
  *
  * It is likely that this shared buffer design and code will change as the C++ 
  * Networking TS buffer features are expanded, changed, or better understood. Currently
@@ -67,7 +89,7 @@ class const_shared_buffer;
 
 /**
  * @brief A mutable (modifiable) byte buffer class with convenience methods, internally 
- * reference-counted for efficient copying.
+ * reference-counted for efficient copying and lifetime management.
  *
  * This class provides ownership, copying, and lifetime management for byte oriented 
  * buffers. In particular, it is designed to be used in conjunction with the 
@@ -76,7 +98,7 @@ class const_shared_buffer;
  * a reference counted buffer can be passed among multiple layers of software without 
  * any one layer "owning" the buffer.
  *
- * A std::byte pointer returned by the @c data method may be invalidated if the 
+ * A @c std::byte pointer returned by the @c data method may be invalidated if the 
  * @c mutable_shared_buffer is modified in any way (this follows the usual constraints
  * on @c std::vector iterator invalidation).
  *
@@ -130,6 +152,9 @@ public:
       mutable_shared_buffer(size_type(0)) {
     *m_data = std::move(bv);
   }
+// Add constrained templated constructor for std::vector of any valid byte type,
+// specially char *; will need to use reinterpret_cast constructor of 
+// std::shared_ptr
 /**
  *  @brief Construct a @c mutable_shared_buffer with an initial size, contents
  *  set to zero.
@@ -156,6 +181,7 @@ public:
   mutable_shared_buffer(const std::byte* buf, size_type sz) : 
     m_data(std::make_shared<byte_vec>(buf, buf+sz)) { }
 
+// Add std::span constructors, maybe remove above constructor and add example
 /**
  *  @brief Construct by copying bytes from an arbitrary pointer.
  *
@@ -348,7 +374,7 @@ public:
  *  @return @c true if @c size() same for each, and each byte compares @c true.
  */
   bool operator== (const mutable_shared_buffer& rhs) noexcept { 
-    return *m_data == *(rhs.m_data);
+    return *m_data == *rhs.m_data;
   }  
 
 /**
@@ -362,7 +388,7 @@ public:
  *
  */
   auto operator<=>(const mutable_shared_buffer& rhs) noexcept {
-    return *m_data <=> *(rhs.m_data);
+    return *m_data <=> *rhs.m_data;
   }
 
 }; // end mutable_shared_buffer class
@@ -401,9 +427,6 @@ private:
   std::shared_ptr<byte_vec> m_data;
 
 private:
-
-  friend bool operator==(const const_shared_buffer&, const const_shared_buffer&) noexcept;
-  friend bool operator<(const const_shared_buffer&, const const_shared_buffer&) noexcept;
 
   friend bool operator==(const mutable_shared_buffer&, const const_shared_buffer&) noexcept;
   friend bool operator==(const const_shared_buffer&, const mutable_shared_buffer&) noexcept;
@@ -527,9 +550,6 @@ public:
  */
   bool empty() const noexcept { return (*m_data).empty(); }
 
-}; // end const_shared_buffer class
-
-// non-member functions
 /**
  *  @brief Compare two @c const_shared_buffer objects for internal buffer 
  *  byte-by-byte equality.
@@ -540,33 +560,26 @@ public:
  *  @return @c true if @c size() same for each, and each byte compares @c true.
  *
  */
-inline bool operator== (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) == *(rhs.m_data);
-}  
-
-/**
- *  @brief Compare two @c const_shared_buffer objects for inequality.
- *
- *  @return Opposite of @c operator==.
- *
- */
-inline bool operator!= (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept {
-  return !(lhs == rhs);
-}
-
+  bool operator== (const const_shared_buffer& rhs) noexcept { 
+    return *m_data == *rhs.m_data;
+  } 
 /**
  *  @brief Compare two @c const_shared_buffer objects for internal buffer 
- *  byte-by-byte less-than ordering.
+ *  byte-by-byte spaceship operator ordering.
  *
- *  Internally this invokes the @c std::vector @c operator< on @c std::byte 
+ *  Internally this invokes the @c std::vector @c <=> on @c std::byte 
  *  elements.
  *
- *  @return @c true if internal buffer of left is less than internal buffer of right.
+ *  @return Spaceship operator comparison result.
  *
  */
-inline bool operator< (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) < *(rhs.m_data);
-}  
+  bool operator<=> (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept {
+    return *m_data <=> *rhs.m_data;
+  }
+
+}; // end const_shared_buffer class
+
+// non-member functions
 
 /**
  *  @brief Compare a @c const_shared_buffer object with a @c mutable_shared_buffer for 
@@ -575,7 +588,7 @@ inline bool operator< (const const_shared_buffer& lhs, const const_shared_buffer
  *  @return @c true if @c size() same for each, and each byte compares @c true.
  */
 inline bool operator== (const const_shared_buffer& lhs, const mutable_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) == *(rhs.m_data);
+  return *lhs.m_data == *rhs.m_data;
 }  
 
 /**
@@ -585,7 +598,7 @@ inline bool operator== (const const_shared_buffer& lhs, const mutable_shared_buf
  *  @return @c true if @c size() same for each, and each byte compares @c true.
  */
 inline bool operator== (const mutable_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) == *(rhs.m_data);
+  return *lhs.m_data == *rhs.m_data;
 }  
 
 } // end namespace
