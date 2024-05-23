@@ -66,29 +66,27 @@ namespace chops {
 class const_shared_buffer;
 
 /**
- *  @brief A mutable (modifiable) byte buffer class with convenience methods, internally 
- *  reference-counted for efficient copying.
+ * @brief A mutable (modifiable) byte buffer class with convenience methods, internally 
+ * reference-counted for efficient copying.
  *
- *  This class provides ownership, copying, and lifetime management for byte oriented 
- *  buffers. In particular, it is designed to be used in conjunction with the 
- *  @c const_shared_buffer class for efficient transfer and correct lifetime management 
- *  of buffers in asynchronous libraries (such as the C++ Networking TS). In particular, 
- *  a reference counted buffer can be passed among multiple layers of software without 
- *  any one layer "owning" the buffer.
+ * This class provides ownership, copying, and lifetime management for byte oriented 
+ * buffers. In particular, it is designed to be used in conjunction with the 
+ * @c const_shared_buffer class for efficient transfer and correct lifetime management 
+ * of buffers in asynchronous libraries (such as the C++ Networking TS). In particular, 
+ * a reference counted buffer can be passed among multiple layers of software without 
+ * any one layer "owning" the buffer.
  *
- *  A std::byte pointer returned by the @c data method may be invalidated if the 
- *  @c mutable_shared_buffer is modified in any way (this follows the usual constraints
- *  on @c std::vector iterator invalidation).
+ * A std::byte pointer returned by the @c data method may be invalidated if the 
+ * @c mutable_shared_buffer is modified in any way (this follows the usual constraints
+ * on @c std::vector iterator invalidation).
  *
- *  This class is similar to @c const_shared_buffer, but with mutable characteristics.
+ * This class is similar to @c const_shared_buffer, but with mutable characteristics.
  *
- *  @invariant There will always be an internal buffer of data, even if the size is zero.
+ * @invariant There will always be an internal buffer of data, even if the size is zero.
  *
- *  @note Modifying the underlying buffer of data (for example by writing bytes using the 
- *  @c data method, or appending data) will show up in any other @c mutable_shared_buffer 
- *  objects that have been copied to or from the original object.
- *
- *  @ingroup utility_module
+ * @note Modifying the underlying buffer of data (for example by writing bytes using the 
+ * @c data method, or appending data) will show up in any other @c mutable_shared_buffer 
+ * objects that have been copied to or from the original object.
  *
  */
 
@@ -103,9 +101,6 @@ private:
 private:
 
   friend class const_shared_buffer;
-
-  friend bool operator==(const mutable_shared_buffer&, const mutable_shared_buffer&) noexcept;
-  friend bool operator<(const mutable_shared_buffer&, const mutable_shared_buffer&) noexcept;
 
   friend bool operator==(const mutable_shared_buffer&, const const_shared_buffer&) noexcept;
   friend bool operator==(const const_shared_buffer&, const mutable_shared_buffer&) noexcept;
@@ -343,19 +338,6 @@ public:
     return append(b);
   }
 
-}; // end mutable_shared_buffer class
-
-// non-member functions
-/**
- *  @brief Swap two @c mutable_shared_buffer objects.
- *
- *  @relates mutable_shared_buffer
- */
-
-inline void swap(mutable_shared_buffer& lhs, mutable_shared_buffer& rhs) noexcept {
-  lhs.swap(rhs);
-}
-
 /**
  *  @brief Compare two @c mutable_shared_buffer objects for internal buffer 
  *  byte-by-byte equality.
@@ -364,38 +346,37 @@ inline void swap(mutable_shared_buffer& lhs, mutable_shared_buffer& rhs) noexcep
  *  elements.
  *
  *  @return @c true if @c size() same for each, and each byte compares @c true.
- *
- *  @relates mutable_shared_buffer
  */
-inline bool operator== (const mutable_shared_buffer& lhs, const mutable_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) == *(rhs.m_data);
-}  
-
-/**
- *  @brief Compare two @c mutable_shared_buffer objects for inequality.
- *
- *  @return Opposite of @c operator==.
- *
- *  @relates mutable_shared_buffer
- */
-inline bool operator!= (const mutable_shared_buffer& lhs, const mutable_shared_buffer& rhs) noexcept {
-  return !(lhs == rhs);
-}
+  bool operator== (const mutable_shared_buffer& rhs) noexcept { 
+    return *m_data == *(rhs.m_data);
+  }  
 
 /**
  *  @brief Compare two @c mutable_shared_buffer objects for internal buffer 
- *  byte-by-byte less-than ordering.
+ *  byte-by-byte spaceship operator ordering.
  *
- *  Internally this invokes the @c std::vector @c operator< on @c std::byte 
+ *  Internally this invokes the @c std::vector @c <=> on @c std::byte 
  *  elements.
  *
- *  @return @c true if internal buffer of left is less than internal buffer of right.
+ *  @return Spaceship operator comparison result.
  *
- *  @relates mutable_shared_buffer
  */
-inline bool operator< (const mutable_shared_buffer& lhs, const mutable_shared_buffer& rhs) noexcept { 
-  return *(lhs.m_data) < *(rhs.m_data);
-}  
+  auto operator<=>(const mutable_shared_buffer& rhs) noexcept {
+    return *m_data <=> *(rhs.m_data);
+  }
+
+}; // end mutable_shared_buffer class
+
+// non-member functions
+/**
+ *  @brief Swap two @c mutable_shared_buffer objects.
+ *
+ */
+
+inline void swap(mutable_shared_buffer& lhs, mutable_shared_buffer& rhs) noexcept {
+  lhs.swap(rhs);
+}
+
 
 /**
  *  @brief A reference counted non-modifiable buffer class with various convenience methods, 
@@ -408,8 +389,6 @@ inline bool operator< (const mutable_shared_buffer& lhs, const mutable_shared_bu
  *  asynchronous operations.
  *
  *  @invariant There will always be an internal buffer of data, even if the size is zero.
- *
- *  @ingroup utility_module
  *
  */
 
@@ -560,7 +539,6 @@ public:
  *
  *  @return @c true if @c size() same for each, and each byte compares @c true.
  *
- *  @relates const_shared_buffer
  */
 inline bool operator== (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept { 
   return *(lhs.m_data) == *(rhs.m_data);
@@ -571,7 +549,6 @@ inline bool operator== (const const_shared_buffer& lhs, const const_shared_buffe
  *
  *  @return Opposite of @c operator==.
  *
- *  @relates const_shared_buffer
  */
 inline bool operator!= (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept {
   return !(lhs == rhs);
@@ -586,7 +563,6 @@ inline bool operator!= (const const_shared_buffer& lhs, const const_shared_buffe
  *
  *  @return @c true if internal buffer of left is less than internal buffer of right.
  *
- *  @relates const_shared_buffer
  */
 inline bool operator< (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept { 
   return *(lhs.m_data) < *(rhs.m_data);
