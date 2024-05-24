@@ -19,5 +19,5 @@ add_executable ( shared_buffer_example shared_buffer_example.cpp )
 target_compile_features ( shared_buffer_example PRIVATE cxx_std_20 )
 
 # link dependencies
-target_link_libraries ( shared_buffer_example PRIVATE shared_buffer )
+target_link_libraries ( shared_buffer_example PRIVATE shared_buffer utility_rack binary_serialize )
 
