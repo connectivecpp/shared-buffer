@@ -1,0 +1,35 @@
+<map id="/github/workspace/test/shared_buffer_test.cpp" name="/github/workspace/test/shared_buffer_test.cpp">
+<area shape="rect" id="Node000001" title="Test scenarios for mutable_shared_buffer and const_shared_buffer classes." alt="" coords="571,5,727,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,102,205,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="571,41,216,97,190,101,189,96,215,91,570,36"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="228,94,382,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="571,49,398,93,396,87,570,44"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="357,183,421,208"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="573,49,522,69,473,96,434,133,406,172,401,169,430,130,470,92,519,64,571,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="691,102,730,127"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="665,45,695,88,691,91,661,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="753,102,841,127"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="684,44,765,91,762,96,681,49"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="446,183,495,208"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="572,48,532,67,498,96,487,112,480,131,473,168,468,167,475,129,482,110,494,92,529,63,569,43"/>
+<area shape="rect" id="Node000008" href="$shared__buffer_8hpp_source.html" title=" " alt="" coords="508,102,667,127"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="637,48,607,91,603,88,633,45"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="865,102,980,127"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="712,44,870,94,869,99,711,49"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="1004,102,1182,127"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="728,40,1016,95,1015,101,727,45"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1206,102,1351,127"/>
+<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="728,31,939,54,1195,91,1215,95,1214,100,1194,97,938,60,727,37"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="558,130,434,179,432,174,556,125"/>
+<area shape="poly" id="edge12_Node000008_Node000007" title=" " alt="" coords="571,130,502,176,499,171,568,125"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="866,183,923,208"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="639,125,851,179,850,184,637,130"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="519,183,587,208"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="585,129,567,169,562,167,580,127"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="611,183,682,208"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="599,126,630,168,626,171,594,129"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="706,183,757,208"/>
+<area shape="poly" id="edge13_Node000008_Node000012" title=" " alt="" coords="611,125,698,173,695,177,608,130"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="782,183,842,208"/>
+<area shape="poly" id="edge14_Node000008_Node000013" title=" " alt="" coords="623,125,768,176,766,181,621,130"/>
+</map>
