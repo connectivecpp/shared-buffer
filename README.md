@@ -46,7 +46,7 @@ Specific version (or branch) specs for the dependenies are in `test/CMakeLists.t
 
 To build and run the unit test program:
 
-First clone the `shared-buffer` repository, then create a build directory in parallel to the `shared-queue` directory (this is called "out of source" builds, which is recommended), then `cd` (change directory) into the build directory. The CMake commands:
+First clone the `shared-buffer` repository, then create a build directory in parallel to the `shared-buffer` directory (this is called "out of source" builds, which is recommended), then `cd` (change directory) into the build directory. The CMake commands:
 
 ```
 cmake -D SHARED_BUFFER_BUILD_TESTS:BOOL=ON ../shared-buffer
