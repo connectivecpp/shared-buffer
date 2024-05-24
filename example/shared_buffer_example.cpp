@@ -4,8 +4,6 @@
  *  @c chops::repeat. See @c threaded_wait_shared_demo.cpp for multithreaded
  *  example.
  * 
- *  @ingroup example_module
- *
  *  @author Thurman Gillespy
  * 
  *  @copyright (c) 2019 by Thurman Gillespy
@@ -28,8 +26,8 @@
 #include <cstdint> // std::uint16_t
 #include <string>
 
-#include "marshall/extract_append.hpp"
-#include "marshall/shared_buffer.hpp"
+#include "serialize/extract_append.hpp"
+#include "buffer/shared_buffer.hpp"
 #include "utility/repeat.hpp"
 
 // tasty utility lambda function

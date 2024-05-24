@@ -19,7 +19,7 @@ CPMAddPackage ( "gh:catchorg/Catch2@3.5.4" )
 CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.0" )
 
 # link dependencies
-target_link_libraries ( shared_buffer_test PRIVATE utility_rack Catch2::Catch2WithMain )
+target_link_libraries ( shared_buffer_test PRIVATE shared_buffer utility_rack Catch2::Catch2WithMain )
 
 enable_testing()
 

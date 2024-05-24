@@ -8,6 +8,12 @@ cmake_minimum_required ( VERSION 3.14 FATAL_ERROR )
 # create project
 project ( shared_buffer_example LANGUAGES CXX )
 
+# add dependencies
+include ( ../cmake/download_cpm.cmake )
+
+CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.0" )
+CPMAddPackage ( "gh:connectivecpp/binary-serialize@1.0.0" )
+
 # add executable
 add_executable ( shared_buffer_example shared_buffer_example.cpp )
 target_compile_features ( shared_buffer_example PRIVATE cxx_std_20 )

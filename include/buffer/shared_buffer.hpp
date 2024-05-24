@@ -573,7 +573,7 @@ public:
  *  @return Spaceship operator comparison result.
  *
  */
-  bool operator<=> (const const_shared_buffer& lhs, const const_shared_buffer& rhs) noexcept {
+  auto operator<=> (const const_shared_buffer& rhs) noexcept {
     return *m_data <=> *rhs.m_data;
   }
 
