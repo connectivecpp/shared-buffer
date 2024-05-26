@@ -25,7 +25,6 @@
 
 #include "utility/repeat.hpp"
 #include "utility/make_byte_array.hpp"
-#include "utility/cast_ptr_to.hpp"
 
 constexpr std::byte Harhar { 42 };
 constexpr int N = 11;
@@ -34,10 +33,9 @@ constexpr int N = 11;
 template <typename SB, typename PT>
 void generic_pointer_construction_test() {
   auto arr = chops::make_byte_array( 40, 41, 42, 43, 44, 60, 59, 58, 57, 56, 42, 42 );
-  const PT* ptr = chops::cast_ptr_to<PT>(arr.data());
+  const PT* ptr = reinterpret_cast<const PT *>(arr.data());
   SB sb(ptr, arr.size());
   REQUIRE_FALSE (sb.empty());
-  const std::byte* buf = chops::cast_ptr_to<std::byte>(arr.data());
   chops::repeat(static_cast<int>(arr.size()), [&sb, arr] (int i) { REQUIRE(*(sb.data()+i) == arr[i]); } );
 }
 
@@ -63,7 +61,7 @@ void common_methods_test(const std::byte* buf, typename SB::size_type sz) {
     auto ba = chops::make_byte_array(buf[0], buf[1]);
     SB sb2(ba.cbegin(), ba.cend());
     REQUIRE_FALSE (sb2.empty());
-    REQUIRE (sb2 < sb);
+    REQUIRE (((sb2 < sb) != 0)); // uses spaceship operator
     REQUIRE (sb2 != sb);
   }
   {
@@ -100,35 +98,28 @@ TEMPLATE_TEST_CASE ( "Shared buffer common methods test",
   common_methods_test<TestType>(arr.data(), arr.size());
 }
 
-SCENARIO ( "Mutable shared buffer copy construction and assignment",
-           "[mutable_shared_buffer] [copy]" ) {
+TEST_CASE ( "Mutable shared buffer copy construction and assignment",
+            "[mutable_shared_buffer] [copy]" ) {
 
-  GIVEN ("A default constructed mutable shared_buffer") {
+  auto arr = chops::make_byte_array ( 80, 81, 82, 83, 84, 90, 91, 92 );
 
-    auto arr = chops::make_byte_array ( 80, 81, 82, 83, 84, 90, 91, 92 );
+  chops::mutable_shared_buffer sb;
+  REQUIRE (sb.empty());
 
-    chops::mutable_shared_buffer sb;
-    REQUIRE (sb.empty());
-
-    WHEN ("Another mutable shared buffer is assigned into it") {
-      chops::mutable_shared_buffer sb2(arr.cbegin(), arr.cend());
-      sb = sb2;
-      THEN ("the size has changed and the two shared buffers compare equal") {
-        REQUIRE (sb.size() == arr.size());
-        REQUIRE (sb == sb2);
-      }
-    }
-    AND_WHEN ("Another mutable shared buffer is copy constructed") {
-      sb = chops::mutable_shared_buffer(arr.cbegin(), arr.cend());
-      chops::mutable_shared_buffer sb2(sb);
-      THEN ("the two shared buffers compare equal and a change to the first shows in the second") {
-        REQUIRE (sb == sb2);
-        *(sb.data()+0) = Harhar;
-        *(sb.data()+1) = Harhar;
-        REQUIRE (sb == sb2);
-      }
-    }
-  } // end given
+  SECTION ("Assign mutable shared buffer into default constructed mutable shared buffer") {
+    chops::mutable_shared_buffer sb2(arr.cbegin(), arr.cend());
+    sb = sb2;
+    REQUIRE (sb.size() == arr.size());
+    REQUIRE (sb == sb2);
+  }
+  SECTION ("Assign mutable shared buffer, then copy construct") {
+    sb = chops::mutable_shared_buffer(arr.cbegin(), arr.cend());
+    chops::mutable_shared_buffer sb2(sb);
+    REQUIRE (sb == sb2);
+    *(sb.data()+0) = Harhar;
+    *(sb.data()+1) = Harhar;
+    REQUIRE (sb == sb2);
+  }
 }
 
 SCENARIO ( "Mutable shared buffer resize and clear",
