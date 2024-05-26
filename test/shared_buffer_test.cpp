@@ -61,14 +61,14 @@ void common_methods_test(const std::byte* buf, typename SB::size_type sz) {
     auto ba = chops::make_byte_array(buf[0], buf[1]);
     SB sb2(ba.cbegin(), ba.cend());
     REQUIRE_FALSE (sb2.empty());
-    REQUIRE ((sb2 < sb));
-    REQUIRE ((sb2 != sb));
+    REQUIRE (((sb2 < sb) != 0)); // uses spaceship operator
+    REQUIRE (sb2 != sb);
   }
   {
     auto ba = chops::make_byte_array(0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
     SB sb2(ba.cbegin(), ba.cend());
     REQUIRE_FALSE (sb2.empty());
-    REQUIRE ((sb2 != sb));
+    REQUIRE (sb2 != sb);
   }
 }
 

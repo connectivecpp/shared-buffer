@@ -394,7 +394,7 @@ public:
  *
  * @return @c true if @c size() same for each, and each byte compares @c true.
  */
-  bool operator== (const mutable_shared_buffer& rhs) noexcept { 
+  bool operator== (const mutable_shared_buffer& rhs) const noexcept { 
     return *m_data == *rhs.m_data;
   }  
 
@@ -408,7 +408,7 @@ public:
  * @return Spaceship operator comparison result.
  *
  */
-  auto operator<=>(const mutable_shared_buffer& rhs) noexcept {
+  auto operator<=>(const mutable_shared_buffer& rhs) const noexcept {
     return *m_data <=> *rhs.m_data;
   }
 
@@ -584,7 +584,7 @@ public:
  * @return @c true if @c size() same for each, and each byte compares @c true.
  *
  */
-  bool operator== (const const_shared_buffer& rhs) noexcept { 
+  bool operator== (const const_shared_buffer& rhs) const noexcept { 
     return *m_data == *rhs.m_data;
   } 
 /**
@@ -597,7 +597,7 @@ public:
  * @return Spaceship operator comparison result.
  *
  */
-  auto operator<=> (const const_shared_buffer& rhs) noexcept {
+  auto operator<=> (const const_shared_buffer& rhs) const noexcept {
     return *m_data <=> *rhs.m_data;
   }
 
