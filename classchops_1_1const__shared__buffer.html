@@ -139,12 +139,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44551e028686d7d8e2f272828d5b47fa" id="r_a44551e028686d7d8e2f272828d5b47fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a44551e028686d7d8e2f272828d5b47fa">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:a44551e028686d7d8e2f272828d5b47fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query to see if size is zero.  <br /></td></tr>
 <tr class="separator:a44551e028686d7d8e2f272828d5b47fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a787a466042a279138a695849ff6fba6b" id="r_a787a466042a279138a695849ff6fba6b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a787a466042a279138a695849ff6fba6b">operator==</a> (const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;rhs) noexcept</td></tr>
-<tr class="memdesc:a787a466042a279138a695849ff6fba6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code> objects for internal buffer byte-by-byte equality.  <br /></td></tr>
-<tr class="separator:a787a466042a279138a695849ff6fba6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae77acfaa0f204a6ec5cb6ed7a32ff73" id="r_aae77acfaa0f204a6ec5cb6ed7a32ff73"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#aae77acfaa0f204a6ec5cb6ed7a32ff73">operator&lt;=&gt;</a> (const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;rhs) noexcept</td></tr>
-<tr class="memdesc:aae77acfaa0f204a6ec5cb6ed7a32ff73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code> objects for internal buffer byte-by-byte spaceship operator ordering.  <br /></td></tr>
-<tr class="separator:aae77acfaa0f204a6ec5cb6ed7a32ff73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02c573c86e09b9f47bb5ee114eda2c0c" id="r_a02c573c86e09b9f47bb5ee114eda2c0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a02c573c86e09b9f47bb5ee114eda2c0c">operator==</a> (const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a02c573c86e09b9f47bb5ee114eda2c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code> objects for internal buffer byte-by-byte equality.  <br /></td></tr>
+<tr class="separator:a02c573c86e09b9f47bb5ee114eda2c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dbc786e8c60d13f2202b835722e3c0b" id="r_a3dbc786e8c60d13f2202b835722e3c0b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a3dbc786e8c60d13f2202b835722e3c0b">operator&lt;=&gt;</a> (const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a3dbc786e8c60d13f2202b835722e3c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code> objects for internal buffer byte-by-byte spaceship operator ordering.  <br /></td></tr>
+<tr class="separator:a3dbc786e8c60d13f2202b835722e3c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -244,6 +244,7 @@ template&lt;typename T &gt; </div>
 
 <p>Construct by copying bytes from an arbitrary pointer. </p>
 <p>The pointer passed into this constructor is cast into a <code>std::byte</code> pointer and bytes are then copied. In particular, this method can be used for <code>char</code> pointers, <code>void</code> pointers, <code>unsigned</code> <code>char</code> pointers, etc.</p>
+<dl class="section pre"><dt>Precondition</dt><dd>Size cannot be greater than the source buffer.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buf</td><td>Pointer to a buffer of data. The pointer must be convertible to a <code>void</code> pointer and then to a <code>std::byte</code> pointer.</td></tr>
@@ -279,7 +280,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Construct by copying from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> object. </p>
-<p>This constructor will copy from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code>. There is an alternative constructor that will move from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> instead of copying.</p>
+<p>This constructor will copy from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code>. There is an alternative constructor that is more efficient which moves from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> instead of copying.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td><code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> containing bytes to be copied. </td></tr>
@@ -460,8 +461,8 @@ template&lt;typename InIt &gt; </div>
 
 </div>
 </div>
-<a id="aae77acfaa0f204a6ec5cb6ed7a32ff73" name="aae77acfaa0f204a6ec5cb6ed7a32ff73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae77acfaa0f204a6ec5cb6ed7a32ff73">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
+<a id="a3dbc786e8c60d13f2202b835722e3c0b" name="a3dbc786e8c60d13f2202b835722e3c0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dbc786e8c60d13f2202b835722e3c0b">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -474,7 +475,7 @@ template&lt;typename InIt &gt; </div>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;&#160;</td>
           <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -490,8 +491,8 @@ template&lt;typename InIt &gt; </div>
 
 </div>
 </div>
-<a id="a787a466042a279138a695849ff6fba6b" name="a787a466042a279138a695849ff6fba6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a787a466042a279138a695849ff6fba6b">&#9670;&#160;</a></span>operator==()</h2>
+<a id="a02c573c86e09b9f47bb5ee114eda2c0c" name="a02c573c86e09b9f47bb5ee114eda2c0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02c573c86e09b9f47bb5ee114eda2c0c">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -504,7 +505,7 @@ template&lt;typename InIt &gt; </div>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;&#160;</td>
           <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
