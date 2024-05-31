@@ -10,6 +10,8 @@
 
 ![GH Tag](https://img.shields.io/github/v/tag/connectivecpp/shared-buffer?label=GH%20tag)
 
+![License](https://img.shields.io/badge/License-Boost%201.0-blue)
+
 ## Overview
 
 The `shared_buffer` classes are reference counted `std::byte` buffer classes useful for asynchronous networking. In particular, the Asio asynchronous networking library requires a buffer to be kept alive and valid until the outstanding IO operation (e.g. a network write) is completed. A straightforward and idiomatic way to achieve this is by using reference counted buffers.
