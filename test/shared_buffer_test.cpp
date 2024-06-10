@@ -20,7 +20,7 @@
 #include <list>
 #include <string_view>
 #include <span>
-#include <span> // std::bit_cast
+#include <bit> // std::bit_cast
 
 #include "buffer/shared_buffer.hpp"
 
@@ -32,12 +32,24 @@ constexpr int N = 11;
 
 
 template <typename SB, typename PT>
-void generic_pointer_construction_test() {
+SB generic_pointer_construction_test() {
   auto arr = chops::make_byte_array( 40, 41, 42, 43, 44, 60, 59, 58, 57, 56, 42, 42 );
-  const PT* ptr = std::bit_cast<const PT *>(arr.data());
+  auto ptr = std::bit_cast<const PT *>(arr.data());
   SB sb(ptr, arr.size());
   REQUIRE_FALSE (sb.empty());
   chops::repeat(static_cast<int>(arr.size()), [&sb, arr] (int i) { REQUIRE(*(sb.data()+i) == arr[i]); } );
+  return sb;
+}
+
+template <typename PT>
+void generic_pointer_append_test() {
+  auto sb { generic_pointer_construction_test<chops::mutable_shared_buffer, PT>() };
+  auto sav_sz { sb.size() };
+  const PT arr[] { 5, 6, 7 };
+  sb.append (arr, 3);
+  REQUIRE (sb.size() == (sav_sz + 3));
+//  sb.append (std::span<PT>(arr, 3));
+//  REQUIRE (sb.size() == (sav_sz + 6));
 }
 
 template <typename SB>
@@ -84,15 +96,15 @@ void byte_vector_move_test() {
   REQUIRE_FALSE (bv.size() == sb.size());
 }
  
-TEMPLATE_TEST_CASE ( "Checking generic pointer construction",
+TEMPLATE_TEST_CASE ( "Generic pointer construction",
                      "[common]",
-                     char, unsigned char, signed char ) {
+                     char, unsigned char, signed char, std::uint8_t ) {
   generic_pointer_construction_test<chops::mutable_shared_buffer, TestType>();
   generic_pointer_construction_test<chops::const_shared_buffer, TestType>();
 }
 
                      
-TEMPLATE_TEST_CASE ( "Shared buffer common methods test",
+TEMPLATE_TEST_CASE ( "Shared buffer common methods",
                      "[const_shared_buffer] [common]",
                      chops::mutable_shared_buffer, chops::const_shared_buffer ) {
   auto arr = chops::make_byte_array ( 80, 81, 82, 83, 84, 90, 91, 92 );
@@ -211,6 +223,12 @@ TEST_CASE ( "Mutable shared buffer append",
     sb.append(sv.data(), sv.size());
     REQUIRE (sb == cb);
   } 
+}
+
+TEMPLATE_TEST_CASE ( "Generic pointer append",
+                     "[mutable_shared_buffer] [pointer] [append]",
+                     char, unsigned char, signed char, std::uint8_t ) {
+  generic_pointer_append_test<TestType>();
 }
 
 TEST_CASE ( "Compare a mutable shared_buffer with a const shared buffer",
