@@ -46,10 +46,12 @@ void generic_pointer_append_test() {
   auto sb { generic_pointer_construction_test<chops::mutable_shared_buffer, PT>() };
   auto sav_sz { sb.size() };
   const PT arr[] { 5, 6, 7 };
-  sb.append (arr, 3);
+  const PT* ptr_arr { arr };
+  sb.append (ptr_arr, 3);
   REQUIRE (sb.size() == (sav_sz + 3));
-//  sb.append (std::span<PT>(arr, 3));
-//  REQUIRE (sb.size() == (sav_sz + 6));
+  std::span<const PT> sp { arr };
+  sb.append (sp);
+  REQUIRE (sb.size() == (sav_sz + 6));
 }
 
 template <typename SB>
