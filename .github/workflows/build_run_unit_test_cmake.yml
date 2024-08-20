@@ -12,8 +12,8 @@ jobs:
   build_matrix:
     strategy:
       matrix:
-        # os: [ubuntu-latest, windows-latest, macos-14]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-14]
+        # os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -24,7 +24,7 @@ jobs:
       - name: create-build-dir
         run: mkdir build
       - name: configure-cmake
-        run: cd build && cmake -D SHARED_BUFFER_BUILD_TESTS:BOOL=ON -D SHARED_BUFFER_BUILD_EXAMPLES:BOOL=ON ..
+        run: cd build && cmake -D SHARED_BUFFER_BUILD_TESTS:BOOL=ON -D SHARED_BUFFER_BUILD_EXAMPLES:BOOL=ON -D CATCH_CONFIG_CPP17_BYTE:BOOL=ON ..
       - name: build
         run: cd build && cmake --build . --config $BUILD_TYPE
       - name: run-unit-test
