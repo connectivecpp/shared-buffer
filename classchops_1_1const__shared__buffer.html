@@ -110,13 +110,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa203488dceea59d722ce84ad3cb822aa" id="r_aa203488dceea59d722ce84ad3cb822aa"><td class="memItemLeft" align="right" valign="top"><a id="aa203488dceea59d722ce84ad3cb822aa" name="aa203488dceea59d722ce84ad3cb822aa"></a>
 <a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classchops_1_1const__shared__buffer.html">const_shared_buffer</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:aa203488dceea59d722ce84ad3cb822aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79775432c531b74f14614fb667edad82" id="r_a79775432c531b74f14614fb667edad82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a79775432c531b74f14614fb667edad82">const_shared_buffer</a> (const std::byte *buf, size_type sz)</td></tr>
-<tr class="memdesc:a79775432c531b74f14614fb667edad82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a <code>std::byte</code> array.  <br /></td></tr>
-<tr class="separator:a79775432c531b74f14614fb667edad82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad5c577f25a2c6598e0f25cc4353d4e8" id="r_aad5c577f25a2c6598e0f25cc4353d4e8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aad5c577f25a2c6598e0f25cc4353d4e8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#aad5c577f25a2c6598e0f25cc4353d4e8">const_shared_buffer</a> (const T *buf, size_type sz)</td></tr>
-<tr class="memdesc:aad5c577f25a2c6598e0f25cc4353d4e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying bytes from an arbitrary pointer.  <br /></td></tr>
-<tr class="separator:aad5c577f25a2c6598e0f25cc4353d4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d791f62d01167f040e08e35c6a1076b" id="r_a1d791f62d01167f040e08e35c6a1076b"><td class="memTemplParams" colspan="2">template&lt;std::size_t Ext&gt; </td></tr>
+<tr class="memitem:a1d791f62d01167f040e08e35c6a1076b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a1d791f62d01167f040e08e35c6a1076b">const_shared_buffer</a> (std::span&lt; const std::byte, Ext &gt; sp)</td></tr>
+<tr class="memdesc:a1d791f62d01167f040e08e35c6a1076b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a <code>std::span</code> of <code>std::byte</code>.  <br /></td></tr>
+<tr class="separator:a1d791f62d01167f040e08e35c6a1076b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce416e4c75d7516fe83ad70b26a6ef2" id="r_a6ce416e4c75d7516fe83ad70b26a6ef2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a6ce416e4c75d7516fe83ad70b26a6ef2">const_shared_buffer</a> (const std::byte *buf, std::size_t sz)</td></tr>
+<tr class="memdesc:a6ce416e4c75d7516fe83ad70b26a6ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a <code>std::byte</code> array.  <br /></td></tr>
+<tr class="separator:a6ce416e4c75d7516fe83ad70b26a6ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01c01c207166965d164e3bf6ae6618f4" id="r_a01c01c207166965d164e3bf6ae6618f4"><td class="memTemplParams" colspan="2">template&lt;typename T , std::size_t Ext&gt; </td></tr>
+<tr class="memitem:a01c01c207166965d164e3bf6ae6618f4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a01c01c207166965d164e3bf6ae6618f4">const_shared_buffer</a> (std::span&lt; const T, Ext &gt; sp)</td></tr>
+<tr class="memdesc:a01c01c207166965d164e3bf6ae6618f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a <code>std::span</code>.  <br /></td></tr>
+<tr class="separator:a01c01c207166965d164e3bf6ae6618f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdf527dd95e51d91b0ba9af8e9a75438" id="r_abdf527dd95e51d91b0ba9af8e9a75438"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:abdf527dd95e51d91b0ba9af8e9a75438"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#abdf527dd95e51d91b0ba9af8e9a75438">const_shared_buffer</a> (const T *buf, std::size_t sz)</td></tr>
+<tr class="memdesc:abdf527dd95e51d91b0ba9af8e9a75438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying bytes from an arbitrary pointer.  <br /></td></tr>
+<tr class="separator:abdf527dd95e51d91b0ba9af8e9a75438"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4866e237f420e57952a0a3a4f5e64df5" id="r_a4866e237f420e57952a0a3a4f5e64df5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classchops_1_1const__shared__buffer.html#a4866e237f420e57952a0a3a4f5e64df5">const_shared_buffer</a> (const <a class="el" href="classchops_1_1mutable__shared__buffer.html">mutable_shared_buffer</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a4866e237f420e57952a0a3a4f5e64df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> object.  <br /></td></tr>
 <tr class="separator:a4866e237f420e57952a0a3a4f5e64df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,8 +168,44 @@ Friends</h2></td></tr>
 <p>The primary difference between this class and the <code><a class="el" href="classchops_1_1mutable__shared__buffer.html" title="A mutable (modifiable) byte buffer class with convenience methods, internally reference-counted for e...">mutable_shared_buffer</a></code> class is that once a <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code> object is constructed, nothing inside it can be modified. This allows it to be used with asynchronous IO functions which depend on the buffer staying the same (i.e. the internal pointer to the data and the size) for the full lifetime of the asynchronous operations.</p>
 <dl class="section invariant"><dt>Invariant</dt><dd>There will always be an internal buffer of data, even if the size is zero. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a79775432c531b74f14614fb667edad82" name="a79775432c531b74f14614fb667edad82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79775432c531b74f14614fb667edad82">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[1/6]</span></h2>
+<a id="a1d791f62d01167f040e08e35c6a1076b" name="a1d791f62d01167f040e08e35c6a1076b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d791f62d01167f040e08e35c6a1076b">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[1/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t Ext&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">chops::const_shared_buffer::const_shared_buffer </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; const std::byte, Ext &gt;&#160;</td>
+          <td class="paramname"><em>sp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct by copying from a <code>std::span</code> of <code>std::byte</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sp</td><td><code>std::byte</code> span pointing to buffer of data. The data is copied into the internal buffer of the <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6ce416e4c75d7516fe83ad70b26a6ef2" name="a6ce416e4c75d7516fe83ad70b26a6ef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ce416e4c75d7516fe83ad70b26a6ef2">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[2/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +222,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_type&#160;</td>
+          <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>sz</em>&#160;</td>
         </tr>
         <tr>
@@ -198,7 +242,7 @@ Friends</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd>Size cannot be greater than the source buffer.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buf</td><td><code>std::byte</code> array containing buffer of data. The data is copied into the internal buffer of the <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code>.</td></tr>
+    <tr><td class="paramname">buf</td><td>Non-null pointer to <code>std::byte</code> buffer of data. The data is copied into the internal buffer of the <code><a class="el" href="classchops_1_1const__shared__buffer.html" title="A reference counted non-modifiable buffer class with various convenience methods, providing efficient...">const_shared_buffer</a></code>.</td></tr>
     <tr><td class="paramname">sz</td><td>Size of buffer. </td></tr>
   </table>
   </dd>
@@ -206,8 +250,45 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="aad5c577f25a2c6598e0f25cc4353d4e8" name="aad5c577f25a2c6598e0f25cc4353d4e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad5c577f25a2c6598e0f25cc4353d4e8">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[2/6]</span></h2>
+<a id="a01c01c207166965d164e3bf6ae6618f4" name="a01c01c207166965d164e3bf6ae6618f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01c01c207166965d164e3bf6ae6618f4">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[3/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , std::size_t Ext&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">chops::const_shared_buffer::const_shared_buffer </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; const T, Ext &gt;&#160;</td>
+          <td class="paramname"><em>sp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct by copying from a <code>std::span</code>. </p>
+<p>The type of the span must be convertible to or be layout compatible with <code>std::byte</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sp</td><td><code>std::span</code> pointing to buffer of data. The <code>std::span</code> pointer is cast into a <code>std::byte</code> pointer and bytes are then copied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abdf527dd95e51d91b0ba9af8e9a75438" name="abdf527dd95e51d91b0ba9af8e9a75438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdf527dd95e51d91b0ba9af8e9a75438">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[4/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +307,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_type&#160;</td>
+          <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>sz</em>&#160;</td>
         </tr>
         <tr>
@@ -244,10 +325,11 @@ template&lt;typename T &gt; </div>
 
 <p>Construct by copying bytes from an arbitrary pointer. </p>
 <p>The pointer passed into this constructor is cast into a <code>std::byte</code> pointer and bytes are then copied. In particular, this method can be used for <code>char</code> pointers, <code>void</code> pointers, <code>unsigned</code> <code>char</code> pointers, etc.</p>
+<p>The type of the span must be convertible to or be layout compatible with <code>std::byte</code>.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Size cannot be greater than the source buffer.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buf</td><td>Pointer to a buffer of data. The pointer must be convertible to a <code>void</code> pointer and then to a <code>std::byte</code> pointer.</td></tr>
+    <tr><td class="paramname">buf</td><td>Non-null pointer to a buffer of data.</td></tr>
     <tr><td class="paramname">sz</td><td>Size of buffer, in bytes. </td></tr>
   </table>
   </dd>
@@ -256,7 +338,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a4866e237f420e57952a0a3a4f5e64df5" name="a4866e237f420e57952a0a3a4f5e64df5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4866e237f420e57952a0a3a4f5e64df5">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4866e237f420e57952a0a3a4f5e64df5">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[5/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,7 +373,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a42868a259f0a7761276ac54a84a8b515" name="a42868a259f0a7761276ac54a84a8b515"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42868a259f0a7761276ac54a84a8b515">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a42868a259f0a7761276ac54a84a8b515">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[6/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +408,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a9f45adf8854f06828ae2fcbffe3a0c4c" name="a9f45adf8854f06828ae2fcbffe3a0c4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f45adf8854f06828ae2fcbffe3a0c4c">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f45adf8854f06828ae2fcbffe3a0c4c">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[7/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +437,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="a6cbaaf545d1b1c1619fad8a541722da8" name="a6cbaaf545d1b1c1619fad8a541722da8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cbaaf545d1b1c1619fad8a541722da8">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cbaaf545d1b1c1619fad8a541722da8">&#9670;&#160;</a></span>const_shared_buffer() <span class="overload">[8/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

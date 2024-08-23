@@ -74,6 +74,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">shared_buffer_test.cpp File Reference</div></div>
@@ -88,101 +89,143 @@ $(function() {
 <code>#include &lt;list&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;span&gt;</code><br />
+<code>#include &lt;array&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;bit&gt;</code><br />
 <code>#include &quot;buffer/shared_buffer.hpp&quot;</code><br />
 <code>#include &quot;utility/repeat.hpp&quot;</code><br />
-<code>#include &quot;utility/make_byte_array.hpp&quot;</code><br />
+<code>#include &quot;utility/byte_array.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for shared_buffer_test.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="shared__buffer__test_8cpp__incl.png" border="0" usemap="#a_2github_2workspace_2test_2shared__buffer__test_8cpp" alt=""/></div>
 <map name="a_2github_2workspace_2test_2shared__buffer__test_8cpp" id="a_2github_2workspace_2test_2shared__buffer__test_8cpp">
-<area shape="rect" title="Test scenarios for mutable_shared_buffer and const_shared_buffer classes." alt="" coords="510,5,666,46"/>
+<area shape="rect" title="Test scenarios for mutable_shared_buffer and const_shared_buffer classes." alt="" coords="622,5,778,46"/>
 <area shape="rect" title=" " alt="" coords="5,102,205,127"/>
-<area shape="poly" title=" " alt="" coords="510,44,189,101,188,96,509,38"/>
+<area shape="poly" title=" " alt="" coords="622,40,216,97,188,101,188,96,215,91,621,34"/>
 <area shape="rect" title=" " alt="" coords="228,94,382,135"/>
-<area shape="poly" title=" " alt="" coords="524,49,384,92,383,87,522,44"/>
-<area shape="rect" title=" " alt="" coords="357,183,421,208"/>
-<area shape="poly" title=" " alt="" coords="549,49,512,70,476,96,438,135,408,172,403,169,434,131,473,92,509,66,546,44"/>
-<area shape="rect" title=" " alt="" coords="691,102,730,127"/>
-<area shape="poly" title=" " alt="" coords="617,44,683,90,680,95,614,49"/>
-<area shape="rect" title=" " alt="" coords="753,102,841,127"/>
-<area shape="poly" title=" " alt="" coords="636,44,755,93,753,98,634,49"/>
-<area shape="rect" title=" " alt="" coords="446,183,495,208"/>
-<area shape="poly" title=" " alt="" coords="551,49,522,69,498,95,482,132,475,168,469,167,477,130,493,93,519,65,548,44"/>
-<area shape="rect" href="shared__buffer_8hpp_source.html" title=" " alt="" coords="508,102,667,127"/>
-<area shape="poly" title=" " alt="" coords="590,47,590,86,585,86,585,47"/>
-<area shape="rect" title=" " alt="" coords="865,102,980,127"/>
-<area shape="poly" title=" " alt="" coords="667,44,854,91,865,94,863,100,852,97,665,49"/>
-<area shape="rect" title=" " alt="" coords="1004,102,1182,127"/>
-<area shape="poly" title=" " alt="" coords="667,37,992,91,1015,95,1014,101,991,97,666,42"/>
-<area shape="poly" title=" " alt="" coords="558,130,434,179,432,174,556,125"/>
-<area shape="poly" title=" " alt="" coords="571,130,502,176,499,171,568,125"/>
-<area shape="rect" title=" " alt="" coords="866,183,923,208"/>
-<area shape="poly" title=" " alt="" coords="639,125,851,179,850,184,637,130"/>
-<area shape="rect" title=" " alt="" coords="519,183,587,208"/>
-<area shape="poly" title=" " alt="" coords="585,129,567,169,562,167,580,127"/>
-<area shape="rect" title=" " alt="" coords="611,183,682,208"/>
-<area shape="poly" title=" " alt="" coords="599,126,630,168,626,171,594,129"/>
-<area shape="rect" title=" " alt="" coords="706,183,757,208"/>
-<area shape="poly" title=" " alt="" coords="611,125,698,173,695,177,608,130"/>
-<area shape="rect" title=" " alt="" coords="782,183,842,208"/>
-<area shape="poly" title=" " alt="" coords="623,125,768,176,766,181,621,130"/>
+<area shape="poly" title=" " alt="" coords="622,47,397,96,396,90,621,41"/>
+<area shape="rect" title=" " alt="" coords="350,183,415,208"/>
+<area shape="poly" title=" " alt="" coords="622,46,557,66,492,96,442,134,403,173,400,169,438,130,489,92,555,61,620,41"/>
+<area shape="rect" title=" " alt="" coords="742,102,780,127"/>
+<area shape="poly" title=" " alt="" coords="716,45,746,88,742,91,711,48"/>
+<area shape="rect" title=" " alt="" coords="804,102,891,127"/>
+<area shape="poly" title=" " alt="" coords="735,44,815,91,813,96,732,49"/>
+<area shape="rect" title=" " alt="" coords="439,183,488,208"/>
+<area shape="poly" title=" " alt="" coords="623,49,576,69,532,96,500,132,477,170,473,168,495,129,529,92,574,64,621,44"/>
+<area shape="rect" title=" " alt="" coords="915,102,964,127"/>
+<area shape="poly" title=" " alt="" coords="770,44,836,65,905,92,906,92,904,97,903,96,834,70,768,49"/>
+<area shape="rect" title=" " alt="" coords="512,183,586,208"/>
+<area shape="poly" title=" " alt="" coords="622,45,581,64,563,78,549,95,541,112,539,131,543,168,538,168,534,131,536,111,544,93,559,74,578,60,620,40"/>
+<area shape="rect" title=" " alt="" coords="988,102,1027,127"/>
+<area shape="poly" title=" " alt="" coords="779,37,875,58,928,73,978,92,978,92,976,97,976,96,926,78,874,63,778,42"/>
+<area shape="rect" href="shared__buffer_8hpp_source.html" title=" " alt="" coords="559,102,718,127"/>
+<area shape="poly" title=" " alt="" coords="688,48,658,91,653,88,684,45"/>
+<area shape="rect" title=" " alt="" coords="1051,102,1167,127"/>
+<area shape="poly" title=" " alt="" coords="779,38,1039,91,1052,95,1051,100,1038,97,778,44"/>
+<area shape="rect" title=" " alt="" coords="1191,102,1329,127"/>
+<area shape="poly" title=" " alt="" coords="779,33,962,57,1179,91,1197,95,1196,100,1178,97,961,62,778,38"/>
+<area shape="poly" title=" " alt="" coords="600,130,430,182,428,177,598,125"/>
+<area shape="poly" title=" " alt="" coords="613,130,503,179,501,174,610,125"/>
+<area shape="poly" title=" " alt="" coords="627,130,576,174,572,170,623,126"/>
+<area shape="rect" title=" " alt="" coords="872,183,930,208"/>
+<area shape="poly" title=" " alt="" coords="680,125,858,179,857,184,678,130"/>
+<area shape="rect" title=" " alt="" coords="610,183,677,208"/>
+<area shape="poly" title=" " alt="" coords="642,127,644,167,639,167,636,128"/>
+<area shape="rect" title=" " alt="" coords="701,183,773,208"/>
+<area shape="poly" title=" " alt="" coords="655,126,712,171,709,175,652,130"/>
+<area shape="rect" title=" " alt="" coords="797,183,848,208"/>
+<area shape="poly" title=" " alt="" coords="668,125,783,175,781,179,666,130"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aaf2dc838f3b30a0c11ff2d181f294e28" id="r_aaf2dc838f3b30a0c11ff2d181f294e28"><td class="memItemLeft" align="right" valign="top"><a id="aaf2dc838f3b30a0c11ff2d181f294e28" name="aaf2dc838f3b30a0c11ff2d181f294e28"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>test_data_type</b> = std::array&lt; std::byte, test_data_size &gt;</td></tr>
+<tr class="separator:aaf2dc838f3b30a0c11ff2d181f294e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac1173436836a5059f3c0901210e3f338" id="r_ac1173436836a5059f3c0901210e3f338"><td class="memTemplParams" colspan="2"><a id="ac1173436836a5059f3c0901210e3f338" name="ac1173436836a5059f3c0901210e3f338"></a>
-template&lt;typename SB , typename PT &gt; </td></tr>
-<tr class="memitem:ac1173436836a5059f3c0901210e3f338"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generic_pointer_construction_test</b> ()</td></tr>
-<tr class="separator:ac1173436836a5059f3c0901210e3f338"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10849f6e9bbea7d9e978d267fe9f52e6" id="r_a10849f6e9bbea7d9e978d267fe9f52e6"><td class="memTemplParams" colspan="2"><a id="a10849f6e9bbea7d9e978d267fe9f52e6" name="a10849f6e9bbea7d9e978d267fe9f52e6"></a>
+<tr class="memitem:ae91f89b8b9f85990b95fb1d4eee39b2f" id="r_ae91f89b8b9f85990b95fb1d4eee39b2f"><td class="memTemplParams" colspan="2"><a id="ae91f89b8b9f85990b95fb1d4eee39b2f" name="ae91f89b8b9f85990b95fb1d4eee39b2f"></a>
 template&lt;typename SB &gt; </td></tr>
-<tr class="memitem:a10849f6e9bbea7d9e978d267fe9f52e6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>common_methods_test</b> (const std::byte *buf, typename SB::size_type sz)</td></tr>
-<tr class="separator:a10849f6e9bbea7d9e978d267fe9f52e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91f89b8b9f85990b95fb1d4eee39b2f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>check_sb_against_test_data</b> (SB sb)</td></tr>
+<tr class="separator:ae91f89b8b9f85990b95fb1d4eee39b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac76e631e6dae14d426cdc3ea26bc4a95" id="r_ac76e631e6dae14d426cdc3ea26bc4a95"><td class="memTemplParams" colspan="2"><a id="ac76e631e6dae14d426cdc3ea26bc4a95" name="ac76e631e6dae14d426cdc3ea26bc4a95"></a>
+template&lt;typename SB , typename PT &gt; </td></tr>
+<tr class="memitem:ac76e631e6dae14d426cdc3ea26bc4a95"><td class="memTemplItemLeft" align="right" valign="top">SB&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generic_pointer_construction_test</b> ()</td></tr>
+<tr class="separator:ac76e631e6dae14d426cdc3ea26bc4a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed7023487e946b3644ed4d313d66bc4c" id="r_aed7023487e946b3644ed4d313d66bc4c"><td class="memTemplParams" colspan="2"><a id="aed7023487e946b3644ed4d313d66bc4c" name="aed7023487e946b3644ed4d313d66bc4c"></a>
+template&lt;typename PT &gt; </td></tr>
+<tr class="memitem:aed7023487e946b3644ed4d313d66bc4c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generic_pointer_append_test</b> ()</td></tr>
+<tr class="separator:aed7023487e946b3644ed4d313d66bc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058442ae43f06a2f7963d85b77d88b6f" id="r_a058442ae43f06a2f7963d85b77d88b6f"><td class="memTemplParams" colspan="2"><a id="a058442ae43f06a2f7963d85b77d88b6f" name="a058442ae43f06a2f7963d85b77d88b6f"></a>
+template&lt;typename SB &gt; </td></tr>
+<tr class="memitem:a058442ae43f06a2f7963d85b77d88b6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>check_sb</b> (SB sb)</td></tr>
+<tr class="separator:a058442ae43f06a2f7963d85b77d88b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a58fdba18dfb99d47b7f2d538f690ee" id="r_a4a58fdba18dfb99d47b7f2d538f690ee"><td class="memTemplParams" colspan="2"><a id="a4a58fdba18dfb99d47b7f2d538f690ee" name="a4a58fdba18dfb99d47b7f2d538f690ee"></a>
+template&lt;typename SB &gt; </td></tr>
+<tr class="memitem:a4a58fdba18dfb99d47b7f2d538f690ee"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>common_ctor_test</b> ()</td></tr>
+<tr class="separator:a4a58fdba18dfb99d47b7f2d538f690ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b53254927bc1a0f7928e4308ab28661" id="r_a2b53254927bc1a0f7928e4308ab28661"><td class="memTemplParams" colspan="2"><a id="a2b53254927bc1a0f7928e4308ab28661" name="a2b53254927bc1a0f7928e4308ab28661"></a>
+template&lt;typename SB &gt; </td></tr>
+<tr class="memitem:a2b53254927bc1a0f7928e4308ab28661"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>common_comparison_test</b> ()</td></tr>
+<tr class="separator:a2b53254927bc1a0f7928e4308ab28661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10c4e7e2aa9c56febd631a508286f50a" id="r_a10c4e7e2aa9c56febd631a508286f50a"><td class="memTemplParams" colspan="2"><a id="a10c4e7e2aa9c56febd631a508286f50a" name="a10c4e7e2aa9c56febd631a508286f50a"></a>
 template&lt;typename SB &gt; </td></tr>
 <tr class="memitem:a10c4e7e2aa9c56febd631a508286f50a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>byte_vector_move_test</b> ()</td></tr>
 <tr class="separator:a10c4e7e2aa9c56febd631a508286f50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aa9bf98c748058cac016c5e30bb0408" id="r_a8aa9bf98c748058cac016c5e30bb0408"><td class="memItemLeft" align="right" valign="top"><a id="a8aa9bf98c748058cac016c5e30bb0408" name="a8aa9bf98c748058cac016c5e30bb0408"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Checking generic pointer construction&quot;, &quot;[common]&quot;, char, unsigned char, signed char)</td></tr>
-<tr class="separator:a8aa9bf98c748058cac016c5e30bb0408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad31501c3f56fd295a7e10b47e46f939b" id="r_ad31501c3f56fd295a7e10b47e46f939b"><td class="memItemLeft" align="right" valign="top"><a id="ad31501c3f56fd295a7e10b47e46f939b" name="ad31501c3f56fd295a7e10b47e46f939b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Shared buffer common methods test&quot;, &quot;[const_shared_buffer] [common]&quot;, chops::mutable_shared_buffer, <a class="el" href="classchops_1_1const__shared__buffer.html">chops::const_shared_buffer</a>)</td></tr>
-<tr class="separator:ad31501c3f56fd295a7e10b47e46f939b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ce3bdf39f74ae335ea90a5c3eee4aa8" id="r_a4ce3bdf39f74ae335ea90a5c3eee4aa8"><td class="memItemLeft" align="right" valign="top"><a id="a4ce3bdf39f74ae335ea90a5c3eee4aa8" name="a4ce3bdf39f74ae335ea90a5c3eee4aa8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Generic pointer construction&quot;, &quot;[common]&quot;, char, unsigned char, signed char, std::uint8_t)</td></tr>
+<tr class="separator:a4ce3bdf39f74ae335ea90a5c3eee4aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903841f53005755592581568b376a05f" id="r_a903841f53005755592581568b376a05f"><td class="memItemLeft" align="right" valign="top"><a id="a903841f53005755592581568b376a05f" name="a903841f53005755592581568b376a05f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Shared buffer common ctor methods&quot;, &quot;[const_shared_buffer] [mutable_shared_buffer] [common]&quot;, chops::mutable_shared_buffer, <a class="el" href="classchops_1_1const__shared__buffer.html">chops::const_shared_buffer</a>)</td></tr>
+<tr class="separator:a903841f53005755592581568b376a05f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afede029e04d905143d8548d1d1153ebf" id="r_afede029e04d905143d8548d1d1153ebf"><td class="memItemLeft" align="right" valign="top"><a id="afede029e04d905143d8548d1d1153ebf" name="afede029e04d905143d8548d1d1153ebf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Shared buffer common comparison methods&quot;, &quot;[const_shared_buffer] [mutable_shared_buffer] [common]&quot;, chops::mutable_shared_buffer, <a class="el" href="classchops_1_1const__shared__buffer.html">chops::const_shared_buffer</a>)</td></tr>
+<tr class="separator:afede029e04d905143d8548d1d1153ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34bf336ad429e9180bd3d4da655ce770" id="r_a34bf336ad429e9180bd3d4da655ce770"><td class="memItemLeft" align="right" valign="top"><a id="a34bf336ad429e9180bd3d4da655ce770" name="a34bf336ad429e9180bd3d4da655ce770"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Mutable shared buffer copy construction and assignment&quot;, &quot;[mutable_shared_buffer] [copy]&quot;)</td></tr>
 <tr class="separator:a34bf336ad429e9180bd3d4da655ce770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a43be5fcb76bbc574c60dabb5163777" id="r_a9a43be5fcb76bbc574c60dabb5163777"><td class="memItemLeft" align="right" valign="top"><a id="a9a43be5fcb76bbc574c60dabb5163777" name="a9a43be5fcb76bbc574c60dabb5163777"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Mutable shared buffer resize and clear&quot;, &quot;[mutable_shared_buffer] [resize_and_clear]&quot;)</td></tr>
-<tr class="separator:a9a43be5fcb76bbc574c60dabb5163777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a313b8ddb25fa6fa72d72746aaabab6d9" id="r_a313b8ddb25fa6fa72d72746aaabab6d9"><td class="memItemLeft" align="right" valign="top"><a id="a313b8ddb25fa6fa72d72746aaabab6d9" name="a313b8ddb25fa6fa72d72746aaabab6d9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Mutable shared buffer swap&quot;, &quot;[mutable_shared_buffer] [swap]&quot;)</td></tr>
-<tr class="separator:a313b8ddb25fa6fa72d72746aaabab6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b511e1feb00237b769455fa561bcc9" id="r_a04b511e1feb00237b769455fa561bcc9"><td class="memItemLeft" align="right" valign="top"><a id="a04b511e1feb00237b769455fa561bcc9" name="a04b511e1feb00237b769455fa561bcc9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Mutable shared buffer append&quot;, &quot;[mutable_shared_buffer] [append]&quot;)</td></tr>
-<tr class="separator:a04b511e1feb00237b769455fa561bcc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a793230d585a7bfcefd4134b877a3bba8" id="r_a793230d585a7bfcefd4134b877a3bba8"><td class="memItemLeft" align="right" valign="top"><a id="a793230d585a7bfcefd4134b877a3bba8" name="a793230d585a7bfcefd4134b877a3bba8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Compare a mutable shared_buffer with a const shared buffer&quot;, &quot;[mutable_shared_buffer] [const_shared_buffer] [compare]&quot;)</td></tr>
-<tr class="separator:a793230d585a7bfcefd4134b877a3bba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae40b8be58e9646488ede3bbae1071316" id="r_ae40b8be58e9646488ede3bbae1071316"><td class="memItemLeft" align="right" valign="top"><a id="ae40b8be58e9646488ede3bbae1071316" name="ae40b8be58e9646488ede3bbae1071316"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Mutable shared buffer move into const shared buffer&quot;, &quot;[mutable_shared_buffer] [const_shared_buffer] [move]&quot;)</td></tr>
-<tr class="separator:ae40b8be58e9646488ede3bbae1071316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8263503745dc3cd68dfa29fcf1b991b4" id="r_a8263503745dc3cd68dfa29fcf1b991b4"><td class="memItemLeft" align="right" valign="top"><a id="a8263503745dc3cd68dfa29fcf1b991b4" name="a8263503745dc3cd68dfa29fcf1b991b4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Mutable shared buffer resize and clear&quot;, &quot;[mutable_shared_buffer] [resize_and_clear]&quot;)</td></tr>
+<tr class="separator:a8263503745dc3cd68dfa29fcf1b991b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fec4fb64a3eeb1bad27c7ad1a1ea86f" id="r_a2fec4fb64a3eeb1bad27c7ad1a1ea86f"><td class="memItemLeft" align="right" valign="top"><a id="a2fec4fb64a3eeb1bad27c7ad1a1ea86f" name="a2fec4fb64a3eeb1bad27c7ad1a1ea86f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Mutable shared buffer swap&quot;, &quot;[mutable_shared_buffer] [swap]&quot;)</td></tr>
+<tr class="separator:a2fec4fb64a3eeb1bad27c7ad1a1ea86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a293dd6c6f8b7007e2fc770f86e39326b" id="r_a293dd6c6f8b7007e2fc770f86e39326b"><td class="memItemLeft" align="right" valign="top"><a id="a293dd6c6f8b7007e2fc770f86e39326b" name="a293dd6c6f8b7007e2fc770f86e39326b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Mutable shared buffer append&quot;, &quot;[mutable_shared_buffer] [append]&quot;)</td></tr>
+<tr class="separator:a293dd6c6f8b7007e2fc770f86e39326b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0000161f4af0e305eba5b7e82814c57b" id="r_a0000161f4af0e305eba5b7e82814c57b"><td class="memItemLeft" align="right" valign="top"><a id="a0000161f4af0e305eba5b7e82814c57b" name="a0000161f4af0e305eba5b7e82814c57b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Generic pointer append&quot;, &quot;[mutable_shared_buffer] [pointer] [append]&quot;, char, unsigned char, signed char, std::uint8_t)</td></tr>
+<tr class="separator:a0000161f4af0e305eba5b7e82814c57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a2f5f90cd90a241b9623a1eca867846" id="r_a0a2f5f90cd90a241b9623a1eca867846"><td class="memItemLeft" align="right" valign="top"><a id="a0a2f5f90cd90a241b9623a1eca867846" name="a0a2f5f90cd90a241b9623a1eca867846"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Compare a mutable shared_buffer with a const shared buffer&quot;, &quot;[mutable_shared_buffer] [const_shared_buffer] [compare]&quot;)</td></tr>
+<tr class="separator:a0a2f5f90cd90a241b9623a1eca867846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a666c0a2106c6d73fe15748ce55f2da27" id="r_a666c0a2106c6d73fe15748ce55f2da27"><td class="memItemLeft" align="right" valign="top"><a id="a666c0a2106c6d73fe15748ce55f2da27" name="a666c0a2106c6d73fe15748ce55f2da27"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Mutable shared buffer move into const shared buffer&quot;, &quot;[mutable_shared_buffer] [const_shared_buffer] [move]&quot;)</td></tr>
+<tr class="separator:a666c0a2106c6d73fe15748ce55f2da27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5379efda8197bbc610c2b82cc5f74b1e" id="r_a5379efda8197bbc610c2b82cc5f74b1e"><td class="memItemLeft" align="right" valign="top"><a id="a5379efda8197bbc610c2b82cc5f74b1e" name="a5379efda8197bbc610c2b82cc5f74b1e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TEMPLATE_TEST_CASE</b> (&quot;Move a vector of bytes into a shared buffer&quot;, &quot;[common] [move_byte_vec]&quot;, chops::mutable_shared_buffer, <a class="el" href="classchops_1_1const__shared__buffer.html">chops::const_shared_buffer</a>)</td></tr>
 <tr class="separator:a5379efda8197bbc610c2b82cc5f74b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d5da5da8e14f1482d1a98699c852a63" id="r_a6d5da5da8e14f1482d1a98699c852a63"><td class="memItemLeft" align="right" valign="top"><a id="a6d5da5da8e14f1482d1a98699c852a63" name="a6d5da5da8e14f1482d1a98699c852a63"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SCENARIO</b> (&quot;Use get_byte_vec for external modification of buffer&quot;, &quot;[mutable_shared_buffer] [get_byte_vec]&quot;)</td></tr>
-<tr class="separator:a6d5da5da8e14f1482d1a98699c852a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1a467c34ca4dd64961ebbc1da17745e" id="r_aa1a467c34ca4dd64961ebbc1da17745e"><td class="memItemLeft" align="right" valign="top"><a id="aa1a467c34ca4dd64961ebbc1da17745e" name="aa1a467c34ca4dd64961ebbc1da17745e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TEST_CASE</b> (&quot;Use get_byte_vec for external modification of buffer&quot;, &quot;[mutable_shared_buffer] [get_byte_vec]&quot;)</td></tr>
+<tr class="separator:aa1a467c34ca4dd64961ebbc1da17745e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a29aa918a49e2e060aeb50725a7341354" id="r_a29aa918a49e2e060aeb50725a7341354"><td class="memItemLeft" align="right" valign="top"><a id="a29aa918a49e2e060aeb50725a7341354" name="a29aa918a49e2e060aeb50725a7341354"></a>
-constexpr std::byte&#160;</td><td class="memItemRight" valign="bottom"><b>Harhar</b> { 42 }</td></tr>
-<tr class="separator:a29aa918a49e2e060aeb50725a7341354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eee69f4f513623c72ccbaea4e0fb706" id="r_a8eee69f4f513623c72ccbaea4e0fb706"><td class="memItemLeft" align="right" valign="top"><a id="a8eee69f4f513623c72ccbaea4e0fb706" name="a8eee69f4f513623c72ccbaea4e0fb706"></a>
-constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>N</b> = 11</td></tr>
-<tr class="separator:a8eee69f4f513623c72ccbaea4e0fb706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3090a22b72a9225d9fe96702cebc26df" id="r_a3090a22b72a9225d9fe96702cebc26df"><td class="memItemLeft" align="right" valign="top"><a id="a3090a22b72a9225d9fe96702cebc26df" name="a3090a22b72a9225d9fe96702cebc26df"></a>
+constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>test_data_size</b> { 12u }</td></tr>
+<tr class="separator:a3090a22b72a9225d9fe96702cebc26df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf674869e2da74088fd21ce197f07cf" id="r_aadf674869e2da74088fd21ce197f07cf"><td class="memItemLeft" align="right" valign="top"><a id="aadf674869e2da74088fd21ce197f07cf" name="aadf674869e2da74088fd21ce197f07cf"></a>
+constexpr test_data_type&#160;</td><td class="memItemRight" valign="bottom"><b>test_data</b> { chops::make_byte_array( 40, 41, 42, 43, 44, 60, 59, 58, 57, 56, 42, 42 ) }</td></tr>
+<tr class="separator:aadf674869e2da74088fd21ce197f07cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa18c5ea95443a560592c5d5e5dfdccc6" id="r_aa18c5ea95443a560592c5d5e5dfdccc6"><td class="memItemLeft" align="right" valign="top"><a id="aa18c5ea95443a560592c5d5e5dfdccc6" name="aa18c5ea95443a560592c5d5e5dfdccc6"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>test_data_char</b> [test_data_size] { 40, 41, 42, 43, 44, 60, 59, 58, 57, 56, 42, 42 }</td></tr>
+<tr class="separator:aa18c5ea95443a560592c5d5e5dfdccc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2534df5cb09490df22d5eb0ce04a069b" id="r_a2534df5cb09490df22d5eb0ce04a069b"><td class="memItemLeft" align="right" valign="top"><a id="a2534df5cb09490df22d5eb0ce04a069b" name="a2534df5cb09490df22d5eb0ce04a069b"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>test_data_char_ptr</b> {test_data_char}</td></tr>
+<tr class="separator:a2534df5cb09490df22d5eb0ce04a069b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Test scenarios for <code>mutable_shared_buffer</code> and <code>const_shared_buffer</code> classes. </p>
