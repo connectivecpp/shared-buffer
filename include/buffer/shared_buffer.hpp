@@ -81,12 +81,12 @@
 #include <span>
 
 #include <utility> // std::move, std::swap
-#include <cstring> // std::memcpy
+#include <algorithm> // std::copy
 
-// TODO - add conecepts and / or requires
+// TODO - add concepts and / or requires
 //
 // modify the templated constructor that takes a buffer of any valid 
-// byte type, add constraints; this makes the "reinterpret_cast" safe
+// byte type, add constraints which makes the casting safer
 
 namespace chops {
 
@@ -148,6 +148,34 @@ public:
       m_data{std::make_shared<byte_vec>(size_type(0))} { }
 
 /**
+ * @brief Construct by copying from a @c std::span of @c std::byte.
+ *
+ * @param sp @c std::byte span pointing to buffer of data. The data is
+ * copied into the internal buffer of the @c mutable_shared_buffer. 
+ *
+ */
+  template <std::size_t Ext>
+  explicit mutable_shared_buffer(std::span<const std::byte, Ext> sp) : 
+      m_data{std::make_shared<byte_vec>(sp.data(), sp.data()+sp.size())} { }
+
+/**
+ * @brief Construct by copying from a @c std::byte array.
+ *
+ * A @c std::span is first created, then the constructor taking
+ * a @c std::span is called.
+ *
+ * @pre Size cannot be greater than the source buffer.
+ *
+ * @param buf Non-null pointer to a @c std::byte buffer of data. The 
+ * data is copied into the internal buffer of the @c mutable_shared_buffer.
+ *
+ * @param sz Size of buffer.
+ *
+ */
+  mutable_shared_buffer(const std::byte* buf, std::size_t sz) : 
+      mutable_shared_buffer(std::as_bytes(std::span<const std::byte>{buf, sz})) { }
+
+/**
  * @brief Move construct from a @c std::vector of @c std::bytes.
  *
  * Efficiently construct from a @c std::vector of @c std::bytes by moving
@@ -161,9 +189,10 @@ public:
       m_data{std::make_shared<byte_vec>(size_type(0))} {
     *m_data = std::move(bv);
   }
+
 /**
  * @brief Construct a @c mutable_shared_buffer with an initial size, contents
- * set to zero.
+ * of each byte set to zero.
  *
  * Allocate zero initialized space which can be overwritten with data as needed.
  * The @c data method is called to get access to the underlying @c std::byte 
@@ -171,35 +200,23 @@ public:
  *
  * @param sz Size for internal @c std::byte buffer.
  */
-  explicit mutable_shared_buffer(size_type sz) noexcept : 
+  explicit mutable_shared_buffer(size_type sz) : 
       m_data{std::make_shared<byte_vec>(sz)} { }
 
-/**
- * @brief Construct by copying from a @c std::span of @c std::byte.
- *
- * @param sp @c std::byte span pointing to buffer of data. The data is
- * copied into the internal buffer of the @c mutable_shared_buffer. 
- *
- */
-  mutable_shared_buffer(std::span<const std::byte> sp) noexcept : 
-      m_data{std::make_shared<byte_vec>(sp.data(), sp.data()+sp.size())} { }
 
 /**
- * @brief Construct by copying from a @c std::byte array.
+ * @brief Construct by copying bytes from a @c std::span.
  *
- * A @c std::span is first created, then the constructor taking
- * a @c std::span is called.
+ * The type of the span must be convertible to or be layout compatible with
+ * @c std::byte.
  *
- * @pre Size cannot be greater than the source buffer.
- *
- * @param buf @c std::byte array containing buffer of data. The data is
- * copied into the internal buffer of the @c mutable_shared_buffer.
- *
- * @param sz Size of buffer.
+ * @param sp @c std::span pointing to buffer of data. The @c std::span 
+ * pointer is cast into a @c std::byte pointer and bytes are then copied. 
  *
  */
-  mutable_shared_buffer(const std::byte* buf, size_type sz) noexcept : 
-      mutable_shared_buffer(std::span<const std::byte>(buf, sz)) { }
+  template <typename T, std::size_t Ext>
+  mutable_shared_buffer(std::span<const T, Ext> sp) : 
+      mutable_shared_buffer(std::as_bytes(sp)) { }
 
 /**
  * @brief Construct by copying bytes from an arbitrary pointer.
@@ -210,14 +227,13 @@ public:
  *
  * @pre Size cannot be greater than the source buffer.
  *
- * @param buf Pointer to a buffer of data. The pointer must be convertible 
- * to a @c void pointer and then to a @c std::byte pointer.
+ * @param buf Non-null pointer to a buffer of data. 
  *
  * @param sz Size of buffer, in bytes.
  */
   template <typename T>
   mutable_shared_buffer(const T* buf, size_type sz) : 
-      mutable_shared_buffer(reinterpret_cast<const std::byte *>(buf), sz) { }
+      mutable_shared_buffer(std::as_bytes(std::span<const T>{buf, sz})) { }
 
 /**
  * @brief Construct from input iterators.
@@ -256,23 +272,23 @@ public:
   const std::byte* data() const noexcept { return m_data->data(); }
 
 /**
- * @brief Return access to underlying @c std::vector.
- *
- * This can be used to instantiate a dynamic_buffer as defined in the Networking TS.
- * Changing the @c std::vector from outside this class works because no state
- * data is stored within this object that needs to be consistent with the @c std::vector
- * contents.
- *
- * @return Reference to @c std::vector<std::byte>.
- */
-  byte_vec& get_byte_vec() noexcept { return *m_data; }
-
-/**
  * @brief Return size (number of bytes) of buffer.
  *
  * @return Size of buffer, which may be zero.
  */
   size_type size() const noexcept { return m_data->size(); }
+
+/**
+ * @brief Return access to underlying @c std::vector.
+ *
+ * This can be used to instantiate a @c dynamic_buffer as defined in the Networking TS
+ * or Asio API. Changing the @c std::vector from outside this class works because no 
+ * state data is stored within this object that needs to be consistent with the 
+ * @c std::vector contents.
+ *
+ * @return Reference to @c std::vector<std::byte>.
+ */
+  byte_vec& get_byte_vec() noexcept { return *m_data; }
 
 /**
  * @brief Query to see if size is zero.
@@ -315,17 +331,29 @@ public:
 /**
  * @brief Append a @c std::byte buffer to the end of the internal buffer.
  *
- * @param buf @c std::byte array containing buffer of data.
+ * @param buf Non-null pointer to @c std::byte buffer of data.
  *
  * @param sz Size of buffer.
  *
  * @return Reference to @c this (to allow method chaining).
  */
-  mutable_shared_buffer& append(const std::byte* buf, size_type sz) {
+  mutable_shared_buffer& append(const std::byte* buf, std::size_t sz) {
     size_type old_sz = size();
     resize(old_sz + sz); // set up buffer space
-    std::memcpy(data() + old_sz, buf, sz);
+    std::copy(buf, buf+sz, data()+old_sz);
     return *this;
+  }
+
+/**
+ * @brief Append a @c std::span to the end of the internal buffer.
+ *
+ * @param sp @c std::span of @c std::byte data.
+ *
+ * @return Reference to @c this (to allow method chaining).
+ */
+  template <std::size_t Ext>
+  mutable_shared_buffer& append(std::span<const std::byte, Ext> sp) {
+    return append(sp.data(), sp.size());
   }
 
 /**
@@ -335,14 +363,31 @@ public:
  * are then copied. In particular, this method can be used for @c char pointers, 
  * @c void pointers, @ unsigned @c char pointers, etc.
  *
- * @param buf Pointer to a buffer of data. The pointer must be convertible 
- * to a @c void pointer and then to a @c std::byte pointer.
+ * @param buf Non-null pointer to a buffer of data.
  *
  * @param sz Size of buffer, in bytes.
  */
   template <typename T>
-  mutable_shared_buffer& append(const T* buf, size_type sz) {
-    return append(reinterpret_cast<const std::byte *>(buf), sz);
+  mutable_shared_buffer& append(const T* buf, std::size_t sz) {
+    return append(std::as_bytes(std::span<const T>{buf, sz}));
+  }
+
+/**
+ * @brief Append a @c std::span that is a non @c std::byte buffer.
+ *
+ * The @c std::span passed into this method is performs a cast on the
+ * data. In particular, this method can be used for @c char pointers, 
+ * @c void pointers, @ unsigned @c char pointers, etc.
+ *
+ * The type of the span must be convertible to or be layout compatible with
+ * @c std::byte.
+ *
+ * @param sp @c std::span of arbitrary bytes.
+ *
+ */
+  template <typename T, std::size_t Ext>
+  mutable_shared_buffer& append(std::span<const T, Ext> sp) {
+    return append(std::as_bytes(sp));
   }
 
 /**
@@ -464,18 +509,41 @@ public:
   const_shared_buffer& operator=(const_shared_buffer&&) = delete;
 
 /**
+ * @brief Construct by copying from a @c std::span of @c std::byte.
+ *
+ * @param sp @c std::byte span pointing to buffer of data. The data is
+ * copied into the internal buffer of the @c const_shared_buffer. 
+ *
+ */
+  template <std::size_t Ext>
+  explicit const_shared_buffer(std::span<const std::byte, Ext> sp) : 
+      m_data(std::make_shared<byte_vec>(sp.data(), sp.data()+sp.size())) { }
+/**
  * @brief Construct by copying from a @c std::byte array.
  *
  * @pre Size cannot be greater than the source buffer.
  *
- * @param buf @c std::byte array containing buffer of data. The data is
+ * @param buf Non-null pointer to @c std::byte buffer of data. The data is
  * copied into the internal buffer of the @c const_shared_buffer.
  *
  * @param sz Size of buffer.
  */
-  const_shared_buffer(const std::byte* buf, size_type sz) : 
-      m_data(std::make_shared<byte_vec>(buf, buf+sz)) { }
+  const_shared_buffer(const std::byte* buf, std::size_t sz) : 
+      const_shared_buffer(std::as_bytes(std::span<const std::byte>{buf, sz})) { }
 
+/**
+ * @brief Construct by copying from a @c std::span.
+ *
+ * The type of the span must be convertible to or be layout compatible with
+ * @c std::byte.
+ *
+ * @param sp @c std::span pointing to buffer of data. The @c std::span 
+ * pointer is cast into a @c std::byte pointer and bytes are then copied. 
+ *
+ */
+  template <typename T, std::size_t Ext>
+  const_shared_buffer(std::span<const T, Ext> sp) : 
+      const_shared_buffer(std::as_bytes(sp)) { }
 /**
  * @brief Construct by copying bytes from an arbitrary pointer.
  *
@@ -483,16 +551,18 @@ public:
  * are then copied. In particular, this method can be used for @c char pointers, 
  * @c void pointers, @c unsigned @c char pointers, etc.
  *
+ * The type of the span must be convertible to or be layout compatible with
+ * @c std::byte.
+ *
  * @pre Size cannot be greater than the source buffer.
  *
- * @param buf Pointer to a buffer of data. The pointer must be convertible 
- * to a @c void pointer and then to a @c std::byte pointer.
+ * @param buf Non-null pointer to a buffer of data. 
  *
  * @param sz Size of buffer, in bytes.
  */
   template <typename T>
-  const_shared_buffer(const T* buf, size_type sz) : 
-      const_shared_buffer(reinterpret_cast<const std::byte *>(buf), sz) { }
+  const_shared_buffer(const T* buf, std::size_t sz) : 
+      const_shared_buffer(std::as_bytes(std::span<const T>{buf, sz})) { }
 
 /**
  * @brief Construct by copying from a @c mutable_shared_buffer object.
