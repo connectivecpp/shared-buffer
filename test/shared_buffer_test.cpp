@@ -336,7 +336,11 @@ TEST_CASE ( "Use get_byte_vec for external modification of buffer",
 
   auto r = msb.get_byte_vec();
 //  REQUIRE (r == bv); // Catch2 build problems on MSVC
+  std::array<std::byte, 3> arr2 { r[0], r[1], r[2] };
+  REQUIRE (chops::compare_byte_arrays(arr, arr2));
   r[0] = std::byte(0xdd);
 //  REQUIRE_FALSE (r == bv); // Catch2 build problems on MSVC
+  std::array<std::byte, 3> arr3 { r[0], r[1], r[2] };
+  REQUIRE_FALSE (chops::compare_byte_arrays(arr, arr3));
 }
 
