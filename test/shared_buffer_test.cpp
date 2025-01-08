@@ -260,6 +260,8 @@ TEST_CASE ( "Mutable shared buffer append",
     REQUIRE (sb == ta);
   }
 
+
+
   SECTION ( "Append mutable shared buffer" ) {
     sb.append(ta);
     REQUIRE (sb == ta);
