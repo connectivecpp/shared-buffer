@@ -15,8 +15,8 @@ target_compile_features ( shared_buffer_test PRIVATE cxx_std_20 )
 # add dependencies
 include ( ../cmake/download_cpm.cmake )
 
-CPMAddPackage ( "gh:catchorg/Catch2@3.7.0" )
-CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.3" )
+CPMAddPackage ( "gh:catchorg/Catch2@3.8.0" )
+CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.4" )
 
 # link dependencies
 target_link_libraries ( shared_buffer_test PRIVATE shared_buffer utility_rack Catch2::Catch2WithMain )
