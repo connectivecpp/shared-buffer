@@ -26,13 +26,13 @@
  * convenience methods for appending data. @c const_shared_buffer is a reference counted 
  * non-modifiable buffer class. Once the object is constructed, it cannot be modified. 
  *
- * A @c const_shared_buffer can be efficiently constructed (no buffer copies) from a 
- * @c mutable shared_buffer. This allows the use case of serializing data into a 
- * @c mutable_shared_buffer then constructing a @c const_shared_buffer for writing to
- * the network.
+ * A @c const_shared_buffer can be efficiently constructed (no buffer copies, only
+ * pointer assignments through move construction) from a @c mutable shared_buffer. This 
+ * allows the use case of serializing data into a @c mutable_shared_buffer then 
+ * constructing a @c const_shared_buffer for writing to the network.
  *
  * Besides the data buffer lifetime management, these utility classes eliminate data 
- * copies and (obviously) do not have to be used only in networking use cases.
+ * copies and (obviously) can be utilized in use cases other than networking.
  *
  * ### Additional Details
  *
@@ -64,7 +64,7 @@
  *
  * @authors Cliff Green, Chris Kohlhoff
  *
- * @copyright (c) 2017-2024 by Cliff Green
+ * @copyright (c) 2017-2025 by Cliff Green
  *
  * Distributed under the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
