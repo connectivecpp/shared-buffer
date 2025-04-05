@@ -5,7 +5,7 @@
  *
  * @author Cliff Green
  *
- * @copyright (c) 2017-2024 by Cliff Green
+ * @copyright (c) 2017-2025 by Cliff Green
  *
  * Distributed under the Boost Software License, Version 1.0. 
  * (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,10 +23,10 @@
 #include <array>
 #include <algorithm> // std::copy
 #include <bit> // std::bit_cast
+#include <ranges> // std::views::iota
 
 #include "buffer/shared_buffer.hpp"
 
-#include "utility/repeat.hpp"
 #include "utility/byte_array.hpp"
 
 constexpr std::size_t test_data_size { 12u };
@@ -203,15 +203,16 @@ TEST_CASE ( "Mutable shared buffer resize and clear",
 
   sb.resize(N);
   REQUIRE (sb.size() == N);
-  chops::repeat(N, [&sb] (int i) { REQUIRE (std::to_integer<int>(*(sb.data() + i)) == 0 ); } );
-
+  for (int i : std::views::iota(0, N)) {
+    REQUIRE (std::to_integer<int>(*(sb.data() + i)) == 0 ); 
+  }
   SECTION ( "Compare two resized mutable shared buffer with same size" ) {
     chops::mutable_shared_buffer sb2(N);
     REQUIRE (sb == sb2);
-    chops::repeat(N, [&sb, &sb2] (int i) {
+    for (int i : std::views::iota(0, N)) {
       REQUIRE (std::to_integer<int>(*(sb.data() + i)) == 0 );
       REQUIRE (std::to_integer<int>(*(sb2.data() + i)) == 0 );
-    } );
+    }
   }
   SECTION ( "Clear, check size" ) {
     sb.clear();
