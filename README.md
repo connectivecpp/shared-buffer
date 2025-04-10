@@ -24,9 +24,9 @@ While internally all data is kept in `std::byte` buffers, convenience methods ar
 
 The generated Doxygen documentation for `shared_buffer` is [here](https://connectivecpp.github.io/shared-buffer/).
 
-## Dependencies
+## Library Dependencies
 
-The `shared_buffer` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test code does have dependencies as noted below.
+The `shared_buffer` header file does not have any third-party dependencies. It uses C++ standard library headers only. The unit test and example code do have dependencies as noted below.
 
 ## C++ Standard
 
@@ -43,6 +43,10 @@ The unit test code uses [Catch2](https://github.com/catchorg/Catch2). If the `SH
 The unit test uses utilities from Connective C++'s [utility-rack](https://github.com/connectivecpp/utility-rack).
 
 Specific version (or branch) specs for the dependencies are in the [test/CMakeLists.txt](test/CMakeLists.txt) file, look for the `CPMAddPackage` commands.
+
+## Example Dependencies
+
+The example applications use the Connective C++ `utility_rack` reference counted buffer classes. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
 
 ## Build and Run Unit Tests
 
