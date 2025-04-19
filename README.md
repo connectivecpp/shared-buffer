@@ -46,7 +46,7 @@ Specific version (or branch) specs for the dependencies are in the [test/CMakeLi
 
 ## Example Dependencies
 
-The example applications use the Connective C++ `utility_rack` reference counted buffer classes. Specific version (or branch) specs for the dependency are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` command.
+The example applications use the Connective C++ `utility_rack` reference counted buffer classes and `binary_serialize` functions. Specific version (or branch) specs for the dependencies are in the [example/CMakeLists.txt](example/CMakeLists.txt) file, look for the `CPMAddPackage` commands.
 
 ## Build and Run Unit Tests
 
