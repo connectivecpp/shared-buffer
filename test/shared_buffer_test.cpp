@@ -44,8 +44,7 @@ bool check_sb_against_test_data(SB sb) {
 }
 
 template <typename SB, typename PT>
-SB generic_pointer_construction_test() {
-  auto ptr { std::bit_cast<const PT *>(test_data.data()) };
+SB generic_pointer_construction_test(const PT * ptr) {
   SB sb(ptr, test_data_size);
   REQUIRE_FALSE (sb.empty());
   REQUIRE (check_sb_against_test_data(sb));
@@ -53,8 +52,8 @@ SB generic_pointer_construction_test() {
 }
 
 template <typename PT>
-void generic_pointer_append_test() {
-  auto sb { generic_pointer_construction_test<chops::mutable_shared_buffer, PT>() };
+void generic_pointer_append_test(const PT * ptr) {
+  auto sb { generic_pointer_construction_test<chops::mutable_shared_buffer>(ptr) };
   auto sav_sz { sb.size() };
   const PT arr[] { 5, 6, 7 };
   const PT* ptr_arr { arr };
@@ -149,10 +148,17 @@ void byte_vector_move_test() {
 TEMPLATE_TEST_CASE ( "Generic pointer construction",
                      "[common]",
                      char, unsigned char, signed char, std::uint8_t ) {
-  generic_pointer_construction_test<chops::mutable_shared_buffer, TestType>();
-  generic_pointer_construction_test<chops::const_shared_buffer, TestType>();
+  const TestType* ptr { std::bit_cast<const TestType *>(test_data.data()) };
+  generic_pointer_construction_test<chops::mutable_shared_buffer>(ptr);
+  generic_pointer_construction_test<chops::const_shared_buffer>(ptr);
 }
 
+TEST_CASE ( "Void pointer construction",
+             "[common]" ) {
+  auto ptr { static_cast<const void *>(test_data.data()) };
+  generic_pointer_construction_test<chops::mutable_shared_buffer>(ptr);
+  generic_pointer_construction_test<chops::const_shared_buffer>(ptr);
+}
                      
 TEMPLATE_TEST_CASE ( "Shared buffer common ctor methods",
                      "[const_shared_buffer] [mutable_shared_buffer] [common]",
@@ -261,8 +267,6 @@ TEST_CASE ( "Mutable shared buffer append",
     REQUIRE (sb == ta);
   }
 
-
-
   SECTION ( "Append mutable shared buffer" ) {
     sb.append(ta);
     REQUIRE (sb == ta);
@@ -287,12 +291,21 @@ TEST_CASE ( "Mutable shared buffer append",
     sb.append(sv.data(), sv.size());
     REQUIRE (sb == cb);
   } 
+
+  SECTION ( "Append with void pointer" ) {
+    std::string_view sv("Haha, Bro!");
+    const void* ptr { static_cast<const void*>(sv.data()) };
+    chops::mutable_shared_buffer cb(sv.data(), sv.size());
+    sb.append(ptr, sv.size());
+    REQUIRE (sb == cb);
+  } 
 }
 
 TEMPLATE_TEST_CASE ( "Generic pointer append",
                      "[mutable_shared_buffer] [pointer] [append]",
                      char, unsigned char, signed char, std::uint8_t ) {
-  generic_pointer_append_test<TestType>();
+  const TestType* ptr { std::bit_cast<const TestType *>(test_data.data()) };
+  generic_pointer_append_test<TestType>(ptr);
 }
 
 TEST_CASE ( "Compare a mutable shared_buffer with a const shared buffer",
