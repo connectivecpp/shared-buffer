@@ -96,14 +96,13 @@ per socket".</p>
 <p>The Connective C++ Chops Net IP library is an asynchronous networking library (using Asio underneath) and it uses <code>shared_buffer</code> classes for buffer lifetime management.</p>
 <p>There are two concrete classes, <code>mutable_shared_buffer</code> and <code>const_shared_buffer</code>. <code>mutable_shared_buffer</code> is a reference counted modifiable buffer class with convenience methods for appending data. <code>const_shared_buffer</code> is a reference counted non-modifiable buffer class. Once the object is constructed, it cannot be modified.</p>
 <p>A <code>const_shared_buffer</code> can be efficiently constructed (no buffer copies, only pointer assignments through move construction) from a <code>mutable</code> shared_buffer. This allows the use case of serializing data into a <code>mutable_shared_buffer</code> then constructing a <code>const_shared_buffer</code> for writing to the network.</p>
-<p>Besides the data buffer lifetime management, these utility classes eliminate data copies and (obviously) can be utilized in use cases other than networking.</p>
+<p>Besides the data buffer lifetime management, these utility classes eliminate data buffer copies and (obviously) can be utilized in use cases other than networking (for example reading and writing disk files).</p>
 <h3><a class="anchor" id="autotoc_md1"></a>
 Additional Details</h3>
 <p>Internally all data is stored in a <code>std::vector</code> of <code>std::byte</code>. There are convenience templated constructors so that the <code>shared_buffer</code> objects can be constructed from traditional byte buffers, such as <code>char</code> <code>*</code>.</p>
 <p>There are ordering methods so that shared buffer objects can be stored in sequential or associative containers.</p>
 <p>Efficient moving of data (versus copying) is enabled in multiple ways, including allowing a <code>const_shared_buffer</code> to be move constructed from a <code>mutable_shared_buffer</code>, and allowing a <code>std::vector</code> of <code>std::byte</code> to be moved into either <code>shared_buffer</code> type.</p>
 <p>The implementation is adapted from Chris Kohlhoff's reference counted buffer examples in the Asio library. It has been significantly modified by adding a <code>mutable_shared_buffer</code> class as well as adding convenience methods to the <code>const_shared_buffer</code> class.</p>
-<p>It is likely that this shared buffer design and code will change as the C++ Networking TS buffer features are expanded, changed, or better understood. Currently there are no direct ties to Networking TS buffer features.</p>
 <dl class="section note"><dt>Note</dt><dd>Everything is declared <code>noexcept</code> except for the methods that allocate memory and might throw a memory exception. This is tighter than the <code>noexcept</code> declarations on the underlying <code>std::vector</code> methods, since <code>std::byte</code> operations will never throw.</dd></dl>
 <dl class="section author"><dt>Authors</dt><dd>Cliff Green, Chris Kohlhoff</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2017-2025 by Cliff Green</dd></dl>
