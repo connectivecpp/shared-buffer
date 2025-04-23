@@ -32,7 +32,8 @@
  * constructing a @c const_shared_buffer for writing to the network.
  *
  * Besides the data buffer lifetime management, these utility classes eliminate data 
- * copies and (obviously) can be utilized in use cases other than networking.
+ * buffer copies and (obviously) can be utilized in use cases other than networking
+ * (for example reading and writing disk files).
  *
  * ### Additional Details
  *
@@ -52,10 +53,6 @@
  * examples in the Asio library. It has been significantly modified by adding a 
  * @c mutable_shared_buffer class as well as adding convenience methods to the 
  * @c const_shared_buffer class.
- *
- * It is likely that this shared buffer design and code will change as the C++ 
- * Networking TS buffer features are expanded, changed, or better understood. Currently
- * there are no direct ties to Networking TS buffer features.
  *
  * @note Everything is declared @c noexcept except for the methods that allocate
  * memory and might throw a memory exception. This is tighter than the @c noexcept
@@ -79,6 +76,7 @@
 #include <memory> // std::shared_ptr
 #include <compare> // spaceship operator
 #include <span>
+#include <bit> // std::bit_cast
 
 #include <utility> // std::move, std::swap
 #include <algorithm> // std::copy
@@ -99,7 +97,7 @@ class const_shared_buffer;
  * This class provides ownership, copying, and lifetime management for byte oriented 
  * buffers. In particular, it is designed to be used in conjunction with the 
  * @c const_shared_buffer class for efficient transfer and correct lifetime management 
- * of buffers in asynchronous libraries (such as the C++ Networking TS). In particular, 
+ * of buffers in asynchronous libraries (such as Asio). In particular, 
  * a reference counted buffer can be passed among multiple layers of software without 
  * any one layer "owning" the buffer.
  *
@@ -223,17 +221,37 @@ public:
  *
  * The pointer passed into this constructor is cast into a @c std::byte pointer and bytes 
  * are then copied. In particular, this method can be used for @c char pointers, 
- * @c void pointers, @c unsigned @c char pointers, etc.
+ * @c unsigned @c char pointers, @c std::uint8_t pointers, etc. Non character types that
+ * are trivially copyable are also allowed, although the usual care must be taken
+ * (padding bytes, alignment, etc).
  *
  * @pre Size cannot be greater than the source buffer.
  *
- * @param buf Non-null pointer to a buffer of data. 
+ * @param buf Non-null pointer to a contiguous array of data. 
+ *
+ * @param num Number of elements in the array.
+ *
+ * @note For @c void pointers, see specific constructor taking a @c void pointer.
+ */
+  template <typename T>
+  mutable_shared_buffer(const T* buf, size_type num) : 
+      mutable_shared_buffer(std::as_bytes(std::span<const T>{buf, num})) { }
+
+/**
+ * @brief Construct by copying bytes from a void pointer.
+ *
+ * The pointer passed into this constructor is cast into a @c std::byte pointer and bytes 
+ * are then copied.
+ *
+ * @pre Size cannot be greater than the source buffer.
+ *
+ * @param buf Non-null @c void pointer to a buffer of data. 
  *
  * @param sz Size of buffer, in bytes.
  */
-  template <typename T>
-  mutable_shared_buffer(const T* buf, size_type sz) : 
-      mutable_shared_buffer(std::as_bytes(std::span<const T>{buf, sz})) { }
+  mutable_shared_buffer(const void* buf, size_type sz) : 
+      mutable_shared_buffer(std::as_bytes(
+          std::span<const std::byte>{std::bit_cast<const std::byte*>(buf), sz})) { }
 
 /**
  * @brief Construct from input iterators.
@@ -345,7 +363,7 @@ public:
   }
 
 /**
- * @brief Append a @c std::span to the end of the internal buffer.
+ * @brief Append a @c std::span of @c std::bytes to the end of the internal buffer.
  *
  * @param sp @c std::span of @c std::byte data.
  *
@@ -361,15 +379,33 @@ public:
  *
  * The pointer passed into this method is cast into a @c std::byte pointer and bytes 
  * are then copied. In particular, this method can be used for @c char pointers, 
- * @c void pointers, @ unsigned @c char pointers, etc.
+ * @c void pointers, @c unsigned @c char pointers, @c std::uint8_t pointers, etc.
+ * Non character types that are layout compatible with @c std::byte are allowed.
  *
- * @param buf Non-null pointer to a buffer of data.
+ * @param buf Non-null pointer to an array of data.
+ *
+ * @param num Number of elements in the array.
+ */
+  template <typename T>
+  mutable_shared_buffer& append(const T* buf, std::size_t num) {
+    return append(std::as_bytes(std::span<const T>{buf, num}));
+  }
+
+/**
+ * @brief Append by copying bytes from a void pointer.
+ *
+ * The pointer passed into this constructor is cast into a @c std::byte pointer and bytes 
+ * are then appended.
+ *
+ * @pre Size cannot be greater than the source buffer.
+ *
+ * @param buf Non-null @c void pointer to a buffer of data. 
  *
  * @param sz Size of buffer, in bytes.
  */
-  template <typename T>
-  mutable_shared_buffer& append(const T* buf, std::size_t sz) {
-    return append(std::as_bytes(std::span<const T>{buf, sz}));
+  mutable_shared_buffer& append(const void* buf, size_type sz) {
+    return append(std::as_bytes(
+          std::span<const std::byte>{std::bit_cast<const std::byte*>(buf), sz}));
   }
 
 /**
@@ -549,20 +585,38 @@ public:
  *
  * The pointer passed into this constructor is cast into a @c std::byte pointer and bytes 
  * are then copied. In particular, this method can be used for @c char pointers, 
- * @c void pointers, @c unsigned @c char pointers, etc.
+ * @c unsigned @c char pointers, @c std::uint8_t pointers, etc. Non character types that
+ * are trivially copyable are also allowed, although the usual care must be taken
+ * (padding bytes, alignment, etc).
  *
  * The type of the span must be convertible to or be layout compatible with
  * @c std::byte.
  *
  * @pre Size cannot be greater than the source buffer.
  *
- * @param buf Non-null pointer to a buffer of data. 
+ * @param buf Non-null pointer to an array of data. 
+ *
+ * @param num Number of elements in the array.
+ */
+  template <typename T>
+  const_shared_buffer(const T* buf, std::size_t num) : 
+      const_shared_buffer(std::as_bytes(std::span<const T>{buf, num})) { }
+
+/**
+ * @brief Construct by copying bytes from a void pointer.
+ *
+ * The pointer passed into this constructor is cast into a @c std::byte pointer and bytes 
+ * are then copied.
+ *
+ * @pre Size cannot be greater than the source buffer.
+ *
+ * @param buf Non-null @c void pointer to a buffer of data. 
  *
  * @param sz Size of buffer, in bytes.
  */
-  template <typename T>
-  const_shared_buffer(const T* buf, std::size_t sz) : 
-      const_shared_buffer(std::as_bytes(std::span<const T>{buf, sz})) { }
+  const_shared_buffer(const void* buf, size_type sz) : 
+      const_shared_buffer(std::as_bytes(
+          std::span<const std::byte>{std::bit_cast<const std::byte*>(buf), sz})) { }
 
 /**
  * @brief Construct by copying from a @c mutable_shared_buffer object.
@@ -581,8 +635,8 @@ public:
  *
  * This constructor will move from a @c mutable_shared_buffer into a @c const_shared_buffer. 
  * This allows efficient API boundaries, where application code can construct and fill in a
- * @c mutable_shared_buffer, then @c std::move it into a @c const_shared_buffer for use
- * with asynchronous functions.
+ * @c mutable_shared_buffer, then use this constructor which will @c std::move it into a 
+ * @c const_shared_buffer for use with asynchronous functions.
  *  
  * @param rhs @c mutable_shared_buffer to be moved from; after moving the 
  * @c mutable_shared_buffer will be empty.
