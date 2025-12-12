@@ -224,7 +224,7 @@ TEST_CASE ( "Mutable shared buffer resize and clear",
     sb.clear();
     REQUIRE (sb.size() == 0);
     REQUIRE (sb.empty());
-  } // end given
+  }
 }
 
 TEST_CASE ( "Mutable shared buffer swap",
