@@ -11,8 +11,8 @@ project ( shared_buffer_example LANGUAGES CXX )
 # add dependencies
 include ( ../cmake/download_cpm.cmake )
 
-CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.5" )
-CPMAddPackage ( "gh:connectivecpp/binary-serialize@1.0.4" )
+CPMAddPackage ( "gh:connectivecpp/utility-rack@1.0.6" )
+CPMAddPackage ( "gh:connectivecpp/binary-serialize@1.0.6" )
 
 # add executable
 add_executable ( shared_buffer_example shared_buffer_example.cpp )
