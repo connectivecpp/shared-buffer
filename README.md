@@ -16,7 +16,7 @@
 
 The `shared_buffer` classes are reference counted `std::byte` buffer classes useful for asynchronous networking. In particular, the Asio asynchronous networking library requires a buffer to be kept alive and valid until the outstanding IO operation (e.g. a network write) is completed. A straightforward and idiomatic way to achieve this is by using reference counted buffers.
 
-There are two classes - `const_shared_buffer` for outgoing buffers (which should not be modified), and `mutable_shared_buffer` for incoming buffers (mutable and expandable as data arrives). In addition there are efficient (move) operations for creating a `const_shared_buffer` from a `mutable_shared_buffer`. This allows the following use common networking use case: create a `mutable_shared_buffer`, serialize objects into it, then (efficiently) construct a `const_shared_buffer` and send it out over the network.
+There are two classes - `const_shared_buffer` for outgoing buffers (which should not be modified), and `mutable_shared_buffer` for incoming buffers (mutable and expandable as data arrives). In addition there are efficient (move) operations for creating a `const_shared_buffer` from a `mutable_shared_buffer`. This allows the following common networking use case: create a `mutable_shared_buffer`, serialize objects into it, then (efficiently) construct a `const_shared_buffer` and send it out over the network.
 
 While internally all data is kept in `std::byte` buffers, convenience methods are provided for converting between traditional buffer types (such as `char *` or `unsigned char*` or similar).
 
